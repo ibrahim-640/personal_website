@@ -2,7 +2,16 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
+# manage.py
+import os
+import django
+from django.core.management import call_command
 
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'portfolio_site.settings')
+django.setup()
+
+# Automatically collect static files on deploy
+call_command('collectstatic', interactive=False, verbosity=0)
 
 def main():
     """Run administrative tasks."""
