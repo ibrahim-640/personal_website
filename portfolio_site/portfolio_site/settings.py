@@ -157,12 +157,8 @@ EMAIL_USE_TLS = True
 
 # Use environment variables with fallback for development
 # Safely load email credentials with proper fallbacks to prevent startup errors
-try:
-    EMAIL_HOST_USER = config("EMAIL_HOST_USER", default="")
-    EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", default="")
-except Exception:
-    EMAIL_HOST_USER = ""
-    EMAIL_HOST_PASSWORD = ""
+EMAIL_HOST_USER = config("EMAIL_HOST_USER", default="")
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", default="")
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER if EMAIL_HOST_USER else "noreply@portfolio.com"
 CONTACT_EMAIL = "mwitaibrahim88@gmail.com"
