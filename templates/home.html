@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Home - My Portfolio{% endblock %}
+{% block content %}
+<section class="hero" id="home"
+    style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+           url({% static 'img/hero-bg.jpg' %});">
+    <div class="hero-inner">
+        <h1 class="display-4">Hello, I'm Ibra Mutisia</h1>
+        <p class="lead typing">
+            A Passionate Full Stack Developer | Android & Web Development
+        </p>
+        <a href="{% static 'file/Ibrahim_Mutisia.pdf' %}"
+           class="btn btn-success"
+           download="Ibra-Mutisia-Resume.pdf">
+           Download Resume
+        </a>
+    </div>
+</section>
+
+
+{% endblock %}
