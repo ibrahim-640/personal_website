@@ -36,22 +36,13 @@ if SECRET_KEY == "django-insecure-change-this-in-production":
 # only when the environment variable DEBUG is set to the string "True".
 DEBUG = os.environ.get("DEBUG", "False") == "True"
 
-# Get ALLOWED_HOSTS from env; default works locally
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
+ALLOWED_HOSTS = os.environ.get(
+    "ALLOWED_HOSTS",
+    "localhost,127.0.0.1"
+).split(",")
 
-# If running on Render it provides the external hostname in RENDER_EXTERNAL_HOSTNAME
-# Add it to ALLOWED_HOSTS automatically when available.
-RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
-if RENDER_EXTERNAL_HOSTNAME:
-    if RENDER_EXTERNAL_HOSTNAME not in ALLOWED_HOSTS:
-        ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
-else:
-    # On Render, also allow *.onrender.com wildcard
-    ALLOWED_HOSTS.extend(["*.onrender.com", ".onrender.com"])
-
-# When running behind a proxy (like Render) allow Django to detect HTTPS
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-
+USE_X_FORWARDED_HOST = True
 
 # Application definition
 
