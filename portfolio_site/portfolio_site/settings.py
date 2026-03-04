@@ -37,7 +37,7 @@ if SECRET_KEY == "django-insecure-change-this-in-production":
 DEBUG = os.environ.get("DEBUG", "False") == "True"
 
 # Get ALLOWED_HOSTS from env; default works locally
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
+ALLOWED_HOSTS = os.environ.get("https://personal-website-9k7n.onrender.com", "localhost,127.0.0.1").split(",")
 
 # If running on Render it provides the external hostname in RENDER_EXTERNAL_HOSTNAME
 # Add it to ALLOWED_HOSTS automatically when available.
