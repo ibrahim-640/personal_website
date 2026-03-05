@@ -3,7 +3,7 @@
 <div class="container mt-5" id="project-detail-page">
   <h2>{{ project.title }}</h2>
   {% if project.image %}
-    <img src="{{ project.image.url }}"
+    <img src="{{ project.image }}" alt="{{ project.title }}"
     class="img-fluid mb-3">
   {% endif%}
   <p>{{ project.description }}</p>

@@ -41,7 +41,7 @@ ALLOWED_HOSTS = os.environ.get(
     "localhost,127.0.0.1"
 ).split(",")
 
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'http')
 USE_X_FORWARDED_HOST = True
 
 # Application definition
