@@ -11,7 +11,7 @@ class Project(models.Model):
     short_description =models.CharField(max_length=255,blank=True)
     description = models.TextField()
     technologies = models.CharField(max_length=255,help_text="Technologies used in the project, separated by commas",blank=True)
-    image = models.ImageField(upload_to='project_images/',blank=True,null=True)
+    image = models.URLField(blank=True)
     project_url = models.URLField(blank=True)
     github_url = models.URLField(blank=True)
     category = models.CharField(max_length=50, choices=CATEGORY_CHOICES, default='Web')
