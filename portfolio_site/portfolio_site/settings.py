@@ -22,27 +22,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# Generate one with: python -c 'from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())'
-
-SECRET_KEY = os.environ.get("SECRET_KEY", "django-insecure-change-this-in-production")
-if SECRET_KEY == "django-insecure-change-this-in-production":
-    import warnings
-    warnings.warn("⚠️  SECRET_KEY is using default value. Set SECRET_KEY environment variable in production!")
-
+from decouple import config
+SECRET_KEY = config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 
-# Note: previously DEBUG used an inverted comparison which made the app behave
-# unpredictably depending on the environment string. Expect DEBUG to be True
-# only when the environment variable DEBUG is set to the string "True".
-DEBUG = os.environ.get("DEBUG", "False") == "True"
+DEBUG = config("DEBUG", default=False, cast=bool)
 
-ALLOWED_HOSTS = os.environ.get(
-    "ALLOWED_HOSTS",
-    "localhost,127.0.0.1"
-).split(",")
+# Get ALLOWED_HOSTS from env; default works locally
+ALLOWED_HOSTS = config("ALLOWED_HOSTS", default="localhost,127.0.0.1").split(",")
 
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-USE_X_FORWARDED_HOST = True
 
 # Application definition
 
@@ -143,36 +131,18 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Use WhiteNoise to serve static files in production with compression and manifest support
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # Email settings
-from decouple import config
-
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+from decouple import config
 
-# Use environment variables with fallback for development
-# Safely load email credentials with proper fallbacks to prevent startup errors
-EMAIL_HOST_USER = config("EMAIL_HOST_USER", default="")
-EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", default="")
-
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER if EMAIL_HOST_USER else "noreply@portfolio.com"
+EMAIL_HOST_USER = config("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
+DEFAULT_FROM_EMAIL= EMAIL_HOST_USER
 CONTACT_EMAIL = "mwitaibrahim88@gmail.com"
-
-# Warn if email is not configured
-if not EMAIL_HOST_USER or not EMAIL_HOST_PASSWORD:
-    import warnings
-    warnings.warn("⚠️  Email not configured. Set EMAIL_HOST_USER and EMAIL_HOST_PASSWORD environment variables to enable contact form.")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
-# Enable HTTPS security only in production
-if not DEBUG and "RENDER" in os.environ:
-    SECURE_SSL_REDIRECT = True
-
-    SESSION_COOKIE_SECURE = True
-    CSRF_COOKIE_SECURE = True
-
-    # SECURE_HSTS_SECONDS = 31536000
-    # SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-    # SECURE_HSTS_PRELOAD = True
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
