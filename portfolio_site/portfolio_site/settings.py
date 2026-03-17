@@ -30,6 +30,14 @@ DEBUG = config("DEBUG", default=False, cast=bool)
 
 # Get ALLOWED_HOSTS from env; default works locally
 ALLOWED_HOSTS = config("ALLOWED_HOSTS", default="localhost,127.0.0.1").split(",")
+ALLOWED_HOSTS = [host.strip() for host in ALLOWED_HOSTS.split(",")]
+
+# CSRF Trusted Origins (important for Render)
+CSRF_TRUSTED_ORIGINS = config(
+    "CSRF_TRUSTED_ORIGINS",
+    default="http://localhost"
+)
+CSRF_TRUSTED_ORIGINS = [origin.strip() for origin in CSRF_TRUSTED_ORIGINS.split(",")]
 
 
 # Application definition
