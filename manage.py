@@ -7,7 +7,7 @@ import os
 import django
 from django.core.management import call_command
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'portfolio_site.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'portfolio_site.portfolio_site.settings')
 django.setup()
 
 # Automatically collect static files on deploy
