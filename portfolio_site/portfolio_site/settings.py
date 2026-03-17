@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'main'
+    'portfolio_site.main',
+
 ]
 
 MIDDLEWARE = [
@@ -55,7 +56,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'portfolio_site.urls'
+ROOT_URLCONF = 'portfolio_site.portfolio_site.urls'
+
 
 TEMPLATES = [
     {
@@ -73,7 +75,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'portfolio_site.wsgi.application'
+WSGI_APPLICATION = 'portfolio_site.portfolio_site.wsgi.application'
 
 
 # Database
@@ -86,7 +88,6 @@ DATABASES = {
     'default': dj_database_url.config(
         default=f"sqlite:///{os.path.join(BASE_DIR, 'db.sqlite3')}",
         conn_max_age=600,  # optional: persistent connection pooling
-        ssl_require=True
     )
 }
 
