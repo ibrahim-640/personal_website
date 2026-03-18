@@ -191,3 +191,7 @@ Or reach out directly via email
 ⭐ Support
 
 If you like this project or find it useful, consider giving it a star on GitHub.
+## 📚 Documentation
+
+For detailed deployment instructions and troubleshooting, check out my comprehensive guide:
+- [Deployment Guide](docs/DEPLOYMENT_GUIDE.md) - Complete step-by-step guide for deploying Django on Render
