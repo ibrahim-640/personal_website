@@ -1,7 +1,11 @@
 from django.db import models
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+import os
+
 
 class Project(models.Model):
-
     CATEGORY_CHOICES = [
         ('Web', 'Web Development'),
         ('Android', 'Android Development'),
@@ -32,8 +36,38 @@ class Project(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def save(self, *args, **kwargs):
+        # Generate slug if not provided
         if not self.slug:
             self.slug = self.title.lower().replace(' ', '-')
+
+        # CRITICAL FIX: Upload image to Cloudinary before saving
+        if self.image and not str(self.image).startswith('http'):
+            try:
+                # Configure Cloudinary (will use environment variables)
+                cloudinary.config(
+                    cloud_name=os.environ.get('CLOUDINARY_CLOUD_NAME'),
+                    api_key=os.environ.get('CLOUDINARY_API_KEY'),
+                    api_secret=os.environ.get('CLOUDINARY_API_SECRET'),
+                    secure=True
+                )
+
+                # Upload the image to Cloudinary
+                upload_result = cloudinary.uploader.upload(
+                    self.image,  # The uploaded file
+                    folder="projects/",
+                    public_id=f"project_{self.slug}",  # Use slug as filename
+                    overwrite=True
+                )
+
+                # Replace the local image field with Cloudinary URL
+                self.image = upload_result['url']
+                print(f"✅ Image uploaded to Cloudinary: {self.image}")
+
+            except Exception as e:
+                print(f"⚠️ Cloudinary upload failed: {e}")
+                # Keep local file as fallback (will disappear on redeploy)
+
+        # Save the model with Cloudinary URL in database
         super().save(*args, **kwargs)
 
     def __str__(self):

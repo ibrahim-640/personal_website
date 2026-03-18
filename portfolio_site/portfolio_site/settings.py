@@ -165,19 +165,34 @@ CONTACT_EMAIL = "mwitaibrahim88@gmail.com"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-# Cloudinary configuration - USE os.environ.get() for Render compatibility
+# Cloudinary configuration
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+import os
+
+# Configure Cloudinary directly (this is what the model will use)
+cloudinary.config(
+    cloud_name=os.environ.get('CLOUDINARY_CLOUD_NAME'),
+    api_key=os.environ.get('CLOUDINARY_API_KEY'),
+    api_secret=os.environ.get('CLOUDINARY_API_SECRET'),
+    secure=True
+)
+
+# Django storage configuration (kept for compatibility)
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
     'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
     'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
 }
 
-# FORCE Cloudinary for media files (this ensures images go to cloud, not local disk)
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+# IMPORTANT: Keep local storage - the model handles Cloudinary uploads
+DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Optional: Add debug to verify it's working
 import logging
 logging.basicConfig()
 logger = logging.getLogger(__name__)
-logger.info(f"Using cloud storage: {DEFAULT_FILE_STORAGE}")
-logger.info(f"Cloud name: {os.environ.get('CLOUDINARY_CLOUD_NAME')}")
+logger.info(f"Cloudinary configured with cloud name: {os.environ.get('CLOUDINARY_CLOUD_NAME')}")
