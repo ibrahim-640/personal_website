@@ -16,7 +16,7 @@ def load_fixture(apps, schema_editor):
 
 class Migration(migrations.Migration):
     dependencies = [
-        ('main', '0001_initial'),  # This should match your last migration
+        ('main', '0005_alter_project_category_alter_project_image'),
     ]
 
     operations = [
