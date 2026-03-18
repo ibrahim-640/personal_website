@@ -165,13 +165,19 @@ CONTACT_EMAIL = "mwitaibrahim88@gmail.com"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-# Cloudinary configuration
+# Cloudinary configuration - USE os.environ.get() for Render compatibility
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': config('CLOUDINARY_CLOUD_NAME', default=''),
-    'API_KEY': config('CLOUDINARY_API_KEY', default=''),
-    'API_SECRET': config('CLOUDINARY_API_SECRET', default=''),
+    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
 }
 
-# Use Cloudinary for media files in production
-if 'RENDER' in os.environ:
-    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+# FORCE Cloudinary for media files (this ensures images go to cloud, not local disk)
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+# Optional: Add debug to verify it's working
+import logging
+logging.basicConfig()
+logger = logging.getLogger(__name__)
+logger.info(f"Using cloud storage: {DEFAULT_FILE_STORAGE}")
+logger.info(f"Cloud name: {os.environ.get('CLOUDINARY_CLOUD_NAME')}")
