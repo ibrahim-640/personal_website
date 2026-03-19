@@ -11,4 +11,5 @@ urlpatterns =[
     path('skills/',views.skills,name='skills'),
     path('projects/',views.projects,name='projects'),
     path('contact/',views.contact,name='contact'),
+    path('force-fix/', views.force_fix_images, name='force_fix'),
 ]
