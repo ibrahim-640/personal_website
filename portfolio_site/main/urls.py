@@ -1,7 +1,6 @@
-
-
 from django.urls import path
 from . import views
+from .views import force_fix_images
 
 
 urlpatterns =[
@@ -11,5 +10,5 @@ urlpatterns =[
     path('skills/',views.skills,name='skills'),
     path('projects/',views.projects,name='projects'),
     path('contact/',views.contact,name='contact'),
-    path('force_fix_images', views.force_fix_images, name='force_fix_images'),
+    path('force-fix-images/', force_fix_images, name='force_fix_images'),
 ]
