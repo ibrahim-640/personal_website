@@ -40,10 +40,20 @@ class Project(models.Model):
         if not self.slug:
             self.slug = self.title.lower().replace(' ', '-')
 
-        # CRITICAL FIX: Upload image to Cloudinary before saving
+        # Preserve existing Cloudinary URLs when editing without changing image
+        if self.pk:  # This is an existing project
+            try:
+                old_project = Project.objects.get(pk=self.pk)
+                # If image hasn't changed and is already Cloudinary, keep it
+                if old_project.image and 'cloudinary' in str(old_project.image):
+                    if not self.image or str(self.image) == str(old_project.image):
+                        self.image = old_project.image
+            except Project.DoesNotExist:
+                pass
+
+        # Upload new images to Cloudinary
         if self.image and not str(self.image).startswith('http'):
             try:
-                # Configure Cloudinary (will use environment variables)
                 cloudinary.config(
                     cloud_name=os.environ.get('CLOUDINARY_CLOUD_NAME'),
                     api_key=os.environ.get('CLOUDINARY_API_KEY'),
@@ -51,23 +61,19 @@ class Project(models.Model):
                     secure=True
                 )
 
-                # Upload the image to Cloudinary
                 upload_result = cloudinary.uploader.upload(
-                    self.image,  # The uploaded file
+                    self.image,
                     folder="projects/",
-                    public_id=f"project_{self.slug}",  # Use slug as filename
+                    public_id=f"project_{self.slug}",
                     overwrite=True
                 )
 
-                # Replace the local image field with Cloudinary URL
                 self.image = upload_result['url']
                 print(f"✅ Image uploaded to Cloudinary: {self.image}")
 
             except Exception as e:
                 print(f"⚠️ Cloudinary upload failed: {e}")
-                # Keep local file as fallback (will disappear on redeploy)
 
-        # Save the model with Cloudinary URL in database
         super().save(*args, **kwargs)
 
     def __str__(self):
