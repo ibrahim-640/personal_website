@@ -68,6 +68,7 @@ import cloudinary.uploader
 from django.core.files.base import ContentFile
 import requests
 from io import BytesIO
+from .models import Project  # ← ADD THIS LINE!
 
 
 def force_fix_images(request):
