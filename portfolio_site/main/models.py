@@ -40,19 +40,23 @@ class Project(models.Model):
         if not self.slug:
             self.slug = self.title.lower().replace(' ', '-')
 
-        # Preserve existing Cloudinary URLs when editing without changing image
-        if self.pk:  # This is an existing project
+        # PRESERVATION: Keep existing Cloudinary URLs
+        if self.pk:  # Existing project
             try:
                 old_project = Project.objects.get(pk=self.pk)
-                # If image hasn't changed and is already Cloudinary, keep it
-                if old_project.image and 'cloudinary' in str(old_project.image):
+                # If image is already a Cloudinary URL (http or https)
+                if old_project.image and ('cloudinary.com' in str(old_project.image)):
+                    # If image field hasn't changed or is empty
                     if not self.image or str(self.image) == str(old_project.image):
                         self.image = old_project.image
+                        print(f"🔄 Preserved Cloudinary URL: {self.image}")
+                        super().save(*args, **kwargs)
+                        return
             except Project.DoesNotExist:
                 pass
 
-        # Upload new images to Cloudinary
-        if self.image and not str(self.image).startswith('http'):
+        # UPLOAD: Handle new image uploads
+        if self.image and hasattr(self.image, 'file'):
             try:
                 cloudinary.config(
                     cloud_name=os.environ.get('CLOUDINARY_CLOUD_NAME'),
@@ -61,10 +65,11 @@ class Project(models.Model):
                     secure=True
                 )
 
+                print(f"📤 Uploading new image to Cloudinary...")
                 upload_result = cloudinary.uploader.upload(
                     self.image,
                     folder="projects/",
-                    public_id=f"project_{self.slug}",
+                    public_id=f"project_{self.slug}_{self.pk or 'new'}",
                     overwrite=True
                 )
 
