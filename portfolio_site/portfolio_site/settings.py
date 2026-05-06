@@ -14,6 +14,10 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 import os
 
+from dotenv import load_dotenv
+
+load_dotenv()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -52,8 +56,8 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'cloudinary_storage',
     'django.contrib.staticfiles',
-    'cloudinary_storage',  # Add this line
     'cloudinary',  # Add this line
     'portfolio_site.main',
 
@@ -100,8 +104,8 @@ import os
 
 DATABASES = {
     'default': dj_database_url.config(
-        default=f"sqlite:///{os.path.join(BASE_DIR, 'db.sqlite3')}",
-        conn_max_age=600,  # optional: persistent connection pooling
+        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",  # ✅ absolute path
+        conn_max_age=600,
     )
 }
 
@@ -185,13 +189,15 @@ CLOUDINARY_STORAGE = {
     'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
     'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
 }
-
-# IMPORTANT: Keep local storage - the model handles Cloudinary uploads
-DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-# Optional: Add debug to verify it's working
+# ✅ Use Cloudinary for file storage
+STORAGES = {
+    "default": {
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",  # ✅ Cloudinary
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",  # ✅ keep whitenoise
+    },
+}
 import logging
 logging.basicConfig()
 logger = logging.getLogger(__name__)

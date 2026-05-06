@@ -35,11 +35,10 @@ class ProjectAdmin(admin.ModelAdmin):
 
     def image_preview(self, obj):
         if obj.image:
-            # Fix: Handle both string URLs and ImageField objects
-            if hasattr(obj.image, 'url'):
-                image_url = obj.image.url
-            else:
-                image_url = obj.image
+            try:
+                image_url = obj.image.url  # CloudinaryField always has .url
+            except Exception:
+                return "No Image"
             return format_html(
                 '<img src="{}" width="50" height="50" style="object-fit: cover; border-radius: 5px;" />',
                 image_url

@@ -1,22 +1,145 @@
-{% extends "base.html" %}
-{% load static %}
-{% block title %}Home - My Portfolio{% endblock %}
+{% extends 'base.html' %}
 {% block content %}
-<section class="hero" id="home"
-    style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
-           url({% static 'img/hero-bg.jpg' %});">
-    <div class="hero-inner">
-        <h1 class="display-4">Hello, I'm Ibra Mutisia</h1>
-        <p class="lead typing">
-            A Passionate Full Stack Developer | Android & Web Development
-        </p>
-        <a href="{% static 'file/Ibrahim_Mutisia.pdf' %}"
-           class="btn btn-success"
-           download="Ibra-Mutisia-Resume.pdf">
-           Download Resume
-        </a>
-    </div>
-</section>
 
+<div class="skills-page container-fluid px-0">
+
+  <!-- ======= HERO INTRO ======= -->
+  <section class="skills-hero">
+    <div class="skills-hero-inner">
+
+      <h1 class="skills-hero-tag"><strong>Full-Stack Developer. Android Builder. Problem Solver.</strong></h1>
+      <p class="skills-hero-title">
+        I Build Things That Live on the Web
+        and Run on Your Phone<br>From Django-powered backends to sleek Android apps — <br>I turn ideas into
+        real, working products.Let's build something great together.
+      </p>
+
+      <div class="skills-hero-btns">
+        <a href="/projects" class="skills-btn-primary">
+          <i class="bi bi-grid-fill me-2"></i>View My Work
+        </a>
+        <a href="/contact" class="skills-btn-outline">
+          <i class="bi bi-envelope-fill me-2"></i>Get In Touch
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======= SKILLS SECTION ======= -->
+  <div class="container py-5">
+
+    <h2 class="section-title text-center mb-5">My Skills</h2>
+
+    <!-- SKILLS CARD -->
+    <div class="skills-card">
+
+      <div class="skill-item">
+        <label>Python / Django</label>
+        <div class="progress">
+          <div class="progress-bar" role="progressbar" style="width:90%;">90%</div>
+        </div>
+      </div>
+
+      <div class="skill-item">
+        <label>Kotlin / Android</label>
+        <div class="progress">
+          <div class="progress-bar bg-success" role="progressbar" style="width:85%;">85%</div>
+        </div>
+      </div>
+
+      <div class="skill-item">
+        <label>Firebase</label>
+        <div class="progress">
+          <div class="progress-bar bg-success" role="progressbar" style="width:90%;">90%</div>
+        </div>
+      </div>
+
+      <div class="skill-item">
+        <label>Artificial Intelligence</label>
+        <div class="progress">
+          <div class="progress-bar bg-success" role="progressbar" style="width:85%;">85%</div>
+        </div>
+      </div>
+
+      <div class="skill-item">
+        <label>HTML / CSS / Bootstrap</label>
+        <div class="progress">
+          <div class="progress-bar bg-info" role="progressbar" style="width:95%;">95%</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- EXPERIENCE + EDUCATION -->
+    <div class="tabs-card mt-5">
+
+      <ul class="nav nav-pills custom-tabs mb-4">
+        <li class="nav-item w-50">
+          <button class="nav-link active" data-bs-toggle="pill" data-bs-target="#tab-1">
+            Experience
+          </button>
+        </li>
+        <li class="nav-item w-50">
+          <button class="nav-link" data-bs-toggle="pill" data-bs-target="#tab-2">
+            Education
+          </button>
+        </li>
+      </ul>
+
+      <div class="tab-content">
+
+        <!-- EXPERIENCE -->
+        <div id="tab-1" class="tab-pane fade show active">
+          <div class="row gy-4">
+            <div class="col-sm-6">
+              <h5>CI/CD</h5>
+              <p class="text-muted">Self taught - in progress</p>
+            </div>
+            <div class="col-sm-6">
+              <h5>Web Development</h5>
+              <p class="text-muted">2025 - Present</p>
+            </div>
+            <div class="col-sm-6">
+              <h5>Android Development</h5>
+              <p class="text-muted">2025 - Present</p>
+            </div>
+            <div class="col-sm-6">
+              <h5>Artificial Intelligence</h5>
+              <p class="text-muted">2025 - Present</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- EDUCATION -->
+        <div id="tab-2" class="tab-pane fade">
+          <div class="row gy-4">
+            <div class="col-sm-6">
+              <h5>Web Development</h5>
+              <p class="text-muted">Jan – May 2025</p>
+              <strong>Emobilis Institute of Technology</strong>
+            </div>
+            <div class="col-sm-6">
+              <h5>Android Development</h5>
+              <p class="text-muted">Jan – May 2025</p>
+              <strong>Emobilis Institute of Technology</strong>
+            </div>
+            <div class="col-sm-6">
+              <h5>Artificial Intelligence</h5>
+              <p class="text-muted">November – December 2025</p>
+              <strong>Moringa School</strong>
+            </div>
+            <div class="col-sm-6">
+              <h5>Bachelor of Information and Technology</h5>
+              <p class="text-muted">September 2025 – 2028</p>
+              <strong>Mount Kenya University</strong>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
 
 {% endblock %}

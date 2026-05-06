@@ -14,8 +14,7 @@
             {% for project in projects %}
                 <div class="project-card" data-category="{{ project.category|lower }}">
                     {% if project.image %}
-                        <!-- CHANGE THIS ONE LINE: Remove .url -->
-                        <img src="{{ project.image }}" class="card-img-top" alt="{{ project.title }}">
+                        <img src="{{ project.image.url }}" class="card-img-top" alt="{{ project.title }}">
                     {% endif %}
                     <h5>{{ project.title }}</h5>
                     <p>{{ project.short_description }}</p>

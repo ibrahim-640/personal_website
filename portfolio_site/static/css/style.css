@@ -20,7 +20,7 @@
     --service-icon-bg: #f4f8ff;
 
     /* NAVBAR */
-    --navbar-bg: #ffffff;
+    --navbar-bg: #334155;
     --navbar-text: #000000;
 
     /* MOBILE MENU */
@@ -46,7 +46,7 @@
     --chat-btn: #0d6efd;
     --chatbot-alert-glow: #0d6efd;
     /* FOOTER */
-     --bg-dark: #0f172a;
+    --bg-dark: #334155;
     --bg-light: #ffffff;
 
     --text-light: #e5e7eb;
@@ -60,6 +60,12 @@
     --whatsapp-bg: #25d366;
     --whatsapp-icon: #ffffff;
     --whatsapp-glow: rgba(37,211,102,0.6);
+    /* CONTACT */
+    --contact-success-bg: rgba(34, 197, 94, 0.15);
+    --contact-success-border: rgba(34, 197, 94, 0.4);
+    /* SKILLS HERO BUTTONS */
+    --hero-btn-shadow: rgba(59, 130, 246, 0.4);
+    --hero-btn-shadow-hover: rgba(59, 130, 246, 0.65);
 
 
 }
@@ -73,6 +79,8 @@ body.dark-mode {
 
     --footer-bg-color: #020617;
     --footer-text-color: #f1f1f1;
+    --bg-dark: #020617;
+    --bg-light: #f1f1f1;
 
     --services-bg: #020617;
     --service-card-bg: #0f172a;
@@ -102,6 +110,12 @@ body.dark-mode {
     --whatsapp-bg: #1ebe56;
     --whatsapp-icon: #ffffff;
     --whatsapp-glow: rgba(30,190,86,0.6);
+    /* CONTACT */
+    --contact-success-bg: rgba(34, 197, 94, 0.1);
+    --contact-success-border: rgba(34, 197, 94, 0.3);
+    /* SKILLS HERO BUTTONS */
+    --hero-btn-shadow: rgba(59, 130, 246, 0.3);
+    --hero-btn-shadow-hover: rgba(59, 130, 246, 0.55);
 
 }
 
@@ -229,72 +243,500 @@ footer {
 }
 
 /* Services*/
+/* ===============================
+   SERVICES PAGE
+================================= */
 
-.services {
-    padding:80px 10%;
-    background:var(--services-bg);
-    text-align:center;
+.services-page {
+    background: var(--bg-color);
+    color: var(--text-color);
 }
-.section-title {
-    font-size:2.2rem;
-    font-weight:bold;
-    margin-bottom:10px;
-    color:var(--service-text);
+
+/* --- Hero --- */
+.services-hero {
+    padding: 80px 20px 50px;
+    border-bottom: 1px solid var(--chatbot-border);
+    position: relative;
+    overflow: hidden;
 }
-.section-subtitle {
-    font-size:1rem;
-    margin-bottom:40px;
-    color:var(--service-text);
-}
-.service-container {
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-    gap:25px;
-}
-.service-card {
-    background:var(--service-card-bg);
-    padding:30px 20px;
-    border-radius:12px;
-    box-shadow:0 6px 12px rgba(0,0,0,0.08);
-    transition:transform 0.3s ease,box-shadow 0.3s ease;
-}
-.service-card:hover {
-    transform: translateY(-8px);
-    box-shadow:0 12px 24px rgba(0,0,0,0.15);
-}
-/* icons */
-.service-icon {
-    font-size: 2.5rem;
-    color: var(--service-icon-color);
-    background-color: var(--service-icon-bg);
+
+.services-hero::before {
+    content: "";
+    position: absolute;
+    top: -80px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 400px;
+    background: var(--chatbot-alert-glow);
+    opacity: 0.06;
     border-radius: 50%;
-    padding: 20px;
+    filter: blur(80px);
+    z-index: 0;
+}
+
+.services-hero .container {
+    position: relative;
+    z-index: 1;
+}
+
+.services-hero-title {
+    font-size: 2.6rem;
+    font-weight: 800;
+    color: var(--text-color);
+    margin-bottom: 14px;
+    animation: fadeInDown 1s ease both;
+}
+
+.services-hero-sub {
+    font-size: 1.05rem;
+    color: var(--text-color);
+    opacity: 0.75;
+    max-width: 560px;
+    margin: 0 auto;
+    line-height: 1.7;
+}
+
+/* ===============================
+   SERVICES GRID
+================================= */
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 28px;
+}
+
+/* ===============================
+   SERVICE CARD PRO
+================================= */
+
+.service-card-pro {
+    background: var(--service-card-bg);
+    border: 1px solid var(--chatbot-border);
+    border-radius: 18px;
+    padding: 28px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    transition: transform 0.3s ease,
+                box-shadow 0.3s ease,
+                border-color 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+/* top glow line on hover */
+.service-card-pro::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--progress-bar);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.service-card-pro:hover::before {
+    opacity: 1;
+}
+
+.service-card-pro:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 40px var(--hero-btn-shadow);
+    border-color: var(--service-icon-color);
+}
+
+/* --- Card Top Row: icon + badge --- */
+.service-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* --- Icon Wrap --- */
+.service-icon-wrap {
+    width: 54px;
+    height: 54px;
+    border-radius: 14px;
+    background: var(--service-icon-bg);
+    color: var(--service-icon-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    border: 1px solid var(--chatbot-border);
+    transition: all 0.3s ease;
+}
+
+.service-card-pro:hover .service-icon-wrap {
+    background: var(--service-icon-color);
+    color: var(--chatbot-user-text);
+    border-color: var(--service-icon-color);
+    box-shadow: 0 0 20px var(--hero-btn-shadow);
+}
+
+/* --- Badges --- */
+.service-badge {
+    background: var(--service-icon-bg);
+    color: var(--service-icon-color);
+    border: 1px solid var(--service-icon-color);
+    border-radius: 30px;
+    padding: 4px 14px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+}
+
+.service-badge-green {
+    background: rgba(34, 197, 94, 0.1);
+    color: #22c55e;
+    border-color: #22c55e;
+}
+
+.service-badge-purple {
+    background: rgba(139, 92, 246, 0.1);
+    color: #8b5cf6;
+    border-color: #8b5cf6;
+}
+
+/* --- Card Title --- */
+.service-card-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin: 0;
+}
+
+/* --- Card Description --- */
+.service-card-desc {
+    font-size: 0.92rem;
+    color: var(--text-color);
+    opacity: 0.78;
+    line-height: 1.75;
+    margin: 0;
+}
+
+/* --- Divider between desc and features --- */
+.service-card-pro .service-divider {
+    border: none;
+    border-top: 1px solid var(--chatbot-border);
+    margin: 0;
+}
+
+/* --- Feature List --- */
+.service-features {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+}
+
+.service-features li {
+    font-size: 0.88rem;
+    color: var(--text-color);
+    opacity: 0.85;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.service-features li i {
+    color: var(--service-icon-color);
+    font-size: 0.88rem;
+    flex-shrink: 0;
+}
+
+/* --- Request Button --- */
+.service-request-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 15px;
-    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.1);
-    transition: all 0.3s ease-in-out;
+    background: var(--progress-bar);
+    color: var(--chatbot-user-text);
+    padding: 12px 22px;
+    border-radius: 30px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    border: none;
     cursor: pointer;
+    letter-spacing: 0.3px;
+    box-shadow: 0 4px 14px var(--hero-btn-shadow);
+    transition: transform 0.2s ease,
+                box-shadow 0.3s ease,
+                opacity 0.3s ease;
+    margin-top: auto;
 }
 
-.service-icon:hover {
-    background-color: #007BFF;
-    color:var(--service-text);
-    box-shadow: 0 8px 20px rgba(0, 123, 255, 0.3);
-    transform: translateY(-6px);
+.service-request-btn:hover {
+    transform: scale(1.04);
+    box-shadow: 0 0 24px var(--hero-btn-shadow-hover);
+    opacity: 0.92;
+    color: var(--chatbot-user-text);
 }
 
-.service-title {
-    font-size:1.3rem;
-    font-weight:bold;
-    margin-bottom:10px;
-    color:var(--service-text);
+.service-request-btn:active {
+    transform: scale(0.97);
 }
-.service-description {
-    font-size:0.95rem;
-    color:var(--service-text);
-    line-height:1.5;
+
+/* ===============================
+   REQUEST FORM CARD
+================================= */
+
+.request-card {
+    max-width: 700px;
+    margin: auto;
+    background: var(--service-card-bg);
+    border: 1px solid var(--chatbot-border);
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 0 40px var(--hero-btn-shadow);
+}
+
+.request-card-header {
+    background: var(--progress-bar);
+    color: var(--chatbot-user-text);
+    padding: 20px 30px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.request-card-body {
+    padding: 32px 36px;
+}
+
+/* info banner */
+.request-info-banner {
+    background: var(--service-icon-bg);
+    border: 1px solid var(--chatbot-border);
+    color: var(--text-color);
+    border-radius: 10px;
+    font-size: 0.9rem;
+    margin-bottom: 26px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* form labels */
+.request-card-body .form-label {
+    color: var(--text-color);
+    font-weight: 600;
+    margin-bottom: 6px;
+    font-size: 0.92rem;
+}
+
+/* inputs, selects, textareas */
+.request-card-body .form-control,
+.request-card-body .form-select {
+    background: var(--service-icon-bg);
+    border: 1px solid var(--chatbot-border);
+    color: var(--text-color);
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 0.92rem;
+    transition: border-color 0.3s ease,
+                box-shadow 0.3s ease;
+}
+
+.request-card-body .form-control:focus,
+.request-card-body .form-select:focus {
+    border-color: var(--service-icon-color);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+    outline: none;
+    background: var(--service-icon-bg);
+    color: var(--text-color);
+}
+
+/* fix select arrow color in dark mode */
+.request-card-body .form-select {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%2360a5fa' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    background-size: 14px;
+    padding-right: 40px;
+}
+
+.request-card-body textarea.form-control {
+    resize: none;
+}
+
+/* ===============================
+   PAYMENT CARD
+================================= */
+
+.payment-card {
+    max-width: 700px;
+    margin: auto;
+    background: var(--service-card-bg);
+    border: 1px solid var(--chatbot-border);
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 0 40px var(--hero-btn-shadow);
+}
+
+.payment-card-header {
+    background: var(--progress-bar);
+    color: var(--chatbot-user-text);
+    padding: 20px 30px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.payment-card-body {
+    padding: 32px 36px;
+}
+
+.payment-intro {
+    font-size: 0.97rem;
+    color: var(--text-color);
+    opacity: 0.85;
+    line-height: 1.8;
+    margin-bottom: 28px;
+}
+
+/* --- Steps --- */
+.payment-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+.payment-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    background: var(--service-icon-bg);
+    border: 1px solid var(--chatbot-border);
+    border-radius: 12px;
+    padding: 16px 20px;
+    transition: transform 0.3s ease,
+                box-shadow 0.3s ease,
+                border-color 0.3s ease;
+}
+
+.payment-step:hover {
+    transform: translateX(5px);
+    box-shadow: 0 4px 16px var(--hero-btn-shadow);
+    border-color: var(--service-icon-color);
+}
+
+.payment-step-number {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--progress-bar);
+    color: var(--chatbot-user-text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 0.95rem;
+    flex-shrink: 0;
+    box-shadow: 0 0 12px var(--hero-btn-shadow);
+}
+
+.payment-step-content h6 {
+    font-weight: 700;
+    color: var(--text-color);
+    margin-bottom: 5px;
+    font-size: 0.95rem;
+}
+
+.payment-step-content p {
+    font-size: 0.88rem;
+    color: var(--text-color);
+    opacity: 0.75;
+    margin: 0;
+    line-height: 1.65;
+}
+
+/* --- PayPal Badge --- */
+.paypal-badge {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    background: rgba(0, 112, 186, 0.08);
+    border: 1px solid rgba(0, 112, 186, 0.3);
+    border-radius: 12px;
+    padding: 18px 22px;
+    transition: box-shadow 0.3s ease;
+}
+
+.paypal-badge:hover {
+    box-shadow: 0 4px 20px rgba(0, 112, 186, 0.15);
+}
+
+.paypal-shield {
+    font-size: 2.2rem;
+    color: #0070ba;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.paypal-badge-title {
+    font-weight: 700;
+    color: #0070ba;
+    margin-bottom: 5px;
+    font-size: 0.95rem;
+}
+
+.paypal-badge-sub {
+    font-size: 0.85rem;
+    color: var(--text-color);
+    opacity: 0.75;
+    margin: 0;
+    line-height: 1.65;
+}
+
+/* ===============================
+   RESPONSIVE
+================================= */
+
+@media (max-width: 992px) {
+    .services-grid {
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .services-hero-title {
+        font-size: 1.9rem;
+    }
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
+    .request-card-body,
+    .payment-card-body {
+        padding: 24px 20px;
+    }
+    .payment-step:hover {
+        transform: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .services-hero {
+        padding: 60px 16px 40px;
+    }
+    .service-card-pro {
+        padding: 22px 18px;
+    }
 }
 /* Skills Section */
 /* ===============================
@@ -936,8 +1378,662 @@ footer {
     50% { box-shadow: 0 0 20px var(--whatsapp-glow), 0 0 40px var(--whatsapp-glow); transform: translateY(-50%) scale(1.1); }
     100% { box-shadow: 0 0 5px var(--whatsapp-glow), 0 0 10px var(--whatsapp-glow); transform: translateY(-50%) scale(1); }
 }
+/* ===============================
+   CONTACT PAGE
+================================= */
+.contact-page {
+    background: var(--bg-color);
+    color: var(--text-color);
+}
 
+/* reuses .services-hero, .request-card,
+   .request-card-header, .request-card-body,
+   .contact-submit-btn from services page CSS —
+   no duplication needed */
 
+/* --- Success Alert --- */
+.contact-alert {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(34, 197, 94, 0.1);
+    border: 1px solid rgba(34, 197, 94, 0.35);
+    color: var(--text-color);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 24px;
+    font-size: 0.92rem;
+    line-height: 1.5;
+}
+
+/* --- Card Footer --- */
+.contact-card-footer {
+    background: var(--service-icon-bg);
+    border-top: 1px solid var(--chatbot-border);
+    text-align: center;
+    padding: 14px 20px;
+    font-size: 0.85rem;
+    color: var(--text-color);
+    opacity: 0.7;
+}
+
+/* ===============================
+   CONTACT INFO STRIP
+================================= */
+
+.contact-info-strip {
+    max-width: 700px;
+    margin: auto;
+    background: var(--service-card-bg);
+    border: 1px solid var(--chatbot-border);
+    border-radius: 18px;
+    padding: 28px 36px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+    box-shadow: 0 0 40px var(--hero-btn-shadow);
+    transition: box-shadow 0.3s ease;
+}
+
+.contact-info-strip:hover {
+    box-shadow: 0 0 50px var(--hero-btn-shadow-hover);
+}
+
+/* each info item */
+.contact-info-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex: 1;
+    min-width: 160px;
+}
+
+/* icon */
+.contact-info-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    background: var(--service-icon-bg);
+    color: var(--service-icon-color);
+    border: 1px solid var(--chatbot-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+}
+
+.contact-info-item:hover .contact-info-icon {
+    background: var(--service-icon-color);
+    color: var(--chatbot-user-text);
+    box-shadow: 0 0 16px var(--hero-btn-shadow);
+}
+
+/* label */
+.contact-info-label {
+    font-size: 0.75rem;
+    color: var(--text-color);
+    opacity: 0.6;
+    margin: 0 0 3px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* value */
+.contact-info-value {
+    font-size: 0.9rem;
+    color: var(--text-color);
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    margin: 0;
+}
+
+a.contact-info-value:hover {
+    color: var(--service-icon-color);
+}
+
+/* vertical divider between items */
+.contact-info-divider {
+    width: 1px;
+    height: 50px;
+    background: var(--chatbot-border);
+    flex-shrink: 0;
+}
+
+/* ===============================
+   RESPONSIVE
+================================= */
+
+@media (max-width: 768px) {
+    .contact-info-strip {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 24px 20px;
+        gap: 20px;
+    }
+
+    .contact-info-divider {
+        width: 100%;
+        height: 1px;
+    }
+
+    .contact-info-item {
+        min-width: unset;
+        width: 100%;
+    }
+}
+/* ===============================
+   SKILLS HERO BUTTONS
+================================= */
+
+.skills-hero-btns {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+/* --- Primary: View My Work --- */
+.skills-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    background: var(--progress-bar);           /* matches progress bars & tab active */
+    color: var(--chatbot-user-text);           /* matches submit button text */
+
+    padding: 12px 28px;
+    border-radius: 30px;                       /* matches .filter-btn border-radius */
+    border: none;
+
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    letter-spacing: 0.3px;
+
+    box-shadow: 0 4px 12px var(--hero-btn-shadow);    /* matches .filter-btn hover shadow pattern */
+    transition: transform 0.2s ease,
+                box-shadow 0.3s ease,
+                opacity 0.3s ease;
+}
+
+.skills-btn-primary:hover {
+    transform: scale(1.05);                            /* matches .project-card .btn:hover */
+    box-shadow: 0 0 25px var(--hero-btn-shadow-hover); /* matches .contact-submit-btn:hover glow */
+    opacity: 0.92;
+    color: var(--chatbot-user-text);
+}
+
+.skills-btn-primary:active {
+    transform: scale(0.98);
+}
+
+/* --- Outline: Get In Touch --- */
+.skills-btn-outline {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    background: var(--service-card-bg);        /* matches .filter-btn base background */
+    color: var(--service-icon-color);          /* matches icon color across site */
+
+    padding: 12px 28px;
+    border-radius: 30px;                       /* matches .filter-btn */
+    border: 1px solid var(--service-icon-color); /* matches .filter-btn border style */
+
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    letter-spacing: 0.3px;
+
+    transition: background 0.3s ease,
+                color 0.3s ease,
+                transform 0.2s ease,
+                box-shadow 0.3s ease;
+}
+
+.skills-btn-outline:hover {
+    background: var(--service-icon-color);     /* matches .filter-btn.active fill */
+    color: var(--chatbot-user-text);           /* white text on fill, matches .filter-btn.active */
+    transform: scale(1.05);                    /* matches .project-card .btn:hover */
+    box-shadow: 0 4px 12px var(--hero-btn-shadow); /* matches .filter-btn hover shadow */
+}
+
+.skills-btn-outline:active {
+    transform: scale(0.98);
+}
+.skills-hero-tag {
+    text-align: center;
+    display: block;        /* ensures centering works on h1 */
+    width: 100%;
+}
+
+.skills-hero-title {
+    text-align: center;
+    width: 100%;
+}
+
+/* ===============================
+   RESPONSIVE
+================================= */
+@media (max-width: 576px) {
+    .skills-hero-btns {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .skills-btn-primary,
+    .skills-btn-outline {
+        width: 100%;
+        max-width: 300px;
+        text-align: center;
+    }
+}
+
+/* ===============================
+   ABOUT PAGE
+================================= */
+
+.about-page {
+    background: var(--bg-color);
+    color: var(--text-color);
+    min-height: 100vh;
+}
+
+/* --- Hero Section --- */
+.about-hero {
+    padding: 60px 0 80px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* background glow blob */
+.about-hero::before {
+    content: "";
+    position: absolute;
+    top: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 600px;
+    background: var(--chatbot-alert-glow);
+    opacity: 0.06;
+    border-radius: 50%;
+    filter: blur(90px);
+    z-index: 0;
+}
+
+.about-hero .container {
+    position: relative;
+    z-index: 1;
+}
+
+/* ===============================
+   ABOUT CARD
+================================= */
+
+.about-card {
+    background: var(--service-card-bg);
+    border: 1px solid var(--chatbot-border);
+    border-radius: 24px;
+    box-shadow: 0 0 40px rgba(0, 123, 255, 0.1);
+    overflow: hidden;
+    padding: 50px 40px 0;
+    transition: box-shadow 0.3s ease;
+}
+
+.about-card:hover {
+    box-shadow: 0 0 60px var(--chatbot-alert-glow);
+}
+
+/* ===============================
+   PROFILE IMAGE WRAPPER
+================================= */
+
+.about-img-wrapper {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 16px;
+}
+
+/* ===============================
+   PROFILE PLACEHOLDER
+================================= */
+
+.about-placeholder {
+    width: 220px;
+    height: 220px;
+    border-radius: 24px;
+    background: var(--service-icon-bg);
+    border: 2px dashed var(--service-icon-color);
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 0 30px var(--chatbot-alert-glow);
+}
+
+.about-placeholder:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 50px var(--chatbot-alert-glow);
+}
+
+.about-placeholder-icon {
+    font-size: 5rem;
+    color: var(--service-icon-color);
+    opacity: 0.6;
+}
+
+.about-placeholder-text {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--service-icon-color);
+    opacity: 0.7;
+    margin: 0;
+    letter-spacing: 0.5px;
+}
+
+/* real photo — swap in when ready */
+.about-profile-img {
+    width: 220px;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 24px;
+    border: 3px solid var(--service-icon-color);
+    box-shadow: 0 0 30px var(--chatbot-alert-glow);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.about-profile-img:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 50px var(--chatbot-alert-glow);
+}
+
+/* ===============================
+   AVAILABLE BADGE
+================================= */
+
+.about-img-badge {
+    position: absolute;
+    bottom: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--progress-bar);
+    color: var(--chatbot-user-text);
+    padding: 6px 16px;
+    border-radius: 30px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    white-space: nowrap;
+    box-shadow: 0 4px 12px var(--chatbot-alert-glow);
+    z-index: 2;
+}
+
+/* ===============================
+   VERTICAL DIVIDER
+================================= */
+
+.about-divider {
+    width: 1px;
+    height: 320px;
+    background: var(--chatbot-border);
+    border-radius: 2px;
+}
+
+/* ===============================
+   BIO COLUMN
+================================= */
+
+/* tag pill */
+.about-tag {
+    display: inline-block;
+    background: var(--service-icon-bg);
+    color: var(--service-icon-color);
+    border: 1px solid var(--chatbot-border);
+    border-radius: 30px;
+    padding: 5px 16px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 14px;
+    letter-spacing: 0.3px;
+}
+
+/* name */
+.about-name {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--text-color);
+    margin-bottom: 8px;
+    animation: fadeInDown 1s ease both;
+}
+
+/* role — gradient text */
+.about-role {
+    font-size: 1rem;
+    font-weight: 600;
+    background: var(--progress-bar);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 24px;
+    letter-spacing: 0.3px;
+    font-style: normal;
+}
+
+/* bio paragraphs */
+.about-bio p {
+    font-size: 0.95rem;
+    line-height: 1.85;
+    color: var(--text-color);
+    opacity: 0.85;
+    margin-bottom: 12px;
+}
+
+.about-bio strong {
+    color: var(--service-icon-color);
+    font-weight: 700;
+    opacity: 1;
+}
+
+.about-bio em {
+    color: var(--text-color);
+    opacity: 1;
+    font-style: italic;
+}
+
+/* ===============================
+   STATS ROW
+================================= */
+
+.about-stats {
+    display: flex;
+    gap: 14px;
+    margin: 28px 0 24px;
+    flex-wrap: wrap;
+}
+
+.about-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--service-icon-bg);
+    border: 1px solid var(--chatbot-border);
+    border-radius: 14px;
+    padding: 14px 20px;
+    min-width: 85px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.about-stat:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px var(--chatbot-alert-glow);
+}
+
+.about-stat-number {
+    font-size: 1.6rem;
+    font-weight: 800;
+    background: var(--progress-bar);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.2;
+}
+
+.about-stat-label {
+    font-size: 0.72rem;
+    color: var(--text-color);
+    opacity: 0.7;
+    margin-top: 4px;
+    text-align: center;
+    font-weight: 500;
+}
+
+/* ===============================
+   CTA BUTTONS
+================================= */
+
+.about-btns {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-top: 6px;
+    padding-bottom: 40px;
+}
+
+/* ===============================
+   CARD FOOTER STRIP
+================================= */
+
+.about-card-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 24px;
+    margin-top: 10px;
+    padding: 18px 20px;
+    border-top: 1px solid var(--chatbot-border);
+    background: var(--service-icon-bg);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--service-icon-color);
+    letter-spacing: 0.3px;
+}
+
+.about-card-footer span {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: opacity 0.3s ease;
+}
+
+.about-card-footer span:hover {
+    opacity: 0.75;
+}
+
+/* ===============================
+   RESPONSIVE
+================================= */
+
+@media (max-width: 991px) {
+    .about-divider {
+        display: none;
+    }
+
+    .about-card {
+        padding: 40px 30px 0;
+    }
+
+    .about-name {
+        font-size: 1.9rem;
+    }
+
+    .about-role {
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .about-hero {
+        padding: 40px 0 60px;
+    }
+
+    .about-card {
+        padding: 30px 20px 0;
+        border-radius: 18px;
+    }
+
+    .about-placeholder,
+    .about-profile-img {
+        width: 180px;
+        height: 180px;
+    }
+
+    .about-name {
+        font-size: 1.7rem;
+        text-align: center;
+    }
+
+    .about-role {
+        text-align: center;
+        font-size: 0.88rem;
+    }
+
+    .about-tag {
+        display: block;
+        text-align: center;
+    }
+
+    .about-bio p {
+        text-align: center;
+        font-size: 0.9rem;
+    }
+
+    .about-stats {
+        justify-content: center;
+    }
+
+    .about-btns {
+        justify-content: center;
+        padding-bottom: 30px;
+    }
+
+    .about-card-footer {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .about-placeholder,
+    .about-profile-img {
+        width: 150px;
+        height: 150px;
+    }
+
+    .about-name {
+        font-size: 1.5rem;
+    }
+
+    .about-stat {
+        padding: 10px 14px;
+        min-width: 75px;
+    }
+
+    .about-stat-number {
+        font-size: 1.3rem;
+    }
+}
 
 
 

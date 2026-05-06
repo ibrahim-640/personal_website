@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}About - My Portfolio{% endblock %}
+{% block content %}
+
+<div class="about-page">
+  <section class="about-hero">
+    <div class="container">
+
+      <!-- OUTER CARD WRAPPER -->
+      <div class="about-card">
+        <div class="row align-items-center gy-5">
+
+          <!-- Profile Image Column -->
+          <div class="col-lg-4 text-center">
+            <div class="about-img-wrapper">
+
+              <!-- Profile Placeholder -->
+              {% load static %}
+                <div class="about-img-wrapper">
+                    <img src="{% static 'img/hero-bg.jpg' %}"
+                         alt="Ibrahim Mutisia"
+                         class="about-profile-img">
+                </div>
+
+              <!-- Badge -->
+              <div class="about-img-badge">
+                <i class="bi bi-patch-check-fill me-1"></i> Available for Work
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Divider visible on large screens -->
+          <div class="col-lg-1 d-none d-lg-flex justify-content-center">
+            <div class="about-divider"></div>
+          </div>
+
+          <!-- Bio Column -->
+          <div class="col-lg-7">
+
+            <p class="about-tag">👨‍💻 About Me</p>
+            <h1 class="about-name">Ibrahim Mutisia</h1>
+            <h2 class="about-role">
+              Full-Stack Developer · Android Engineer · AI Enthusiast
+            </h2>
+
+            <div class="about-bio">
+              <p>
+                My journey into tech didn't start in a classroom — it started
+                with <strong>curiosity</strong>. I remember the first time I saw
+                a web page respond to something I typed and thought,
+                <em>"I want to build that."</em> That single moment changed
+                everything.
+              </p>
+              <p>
+                In early 2025, I enrolled at
+                <strong>Emobilis Institute of Technology</strong> where I
+                formally trained in Web Development and Android Development.
+                What began as structured learning quickly became a passion —
+                I was shipping projects outside class hours, debugging late
+                into the night, and genuinely loving every second of it.
+              </p>
+              <p>
+                Later that year I expanded into
+                <strong>Artificial Intelligence</strong> at Moringa School,
+                adding machine learning concepts to my toolkit. Today I'm
+                pursuing a <strong>Bachelor of Information Technology</strong>
+                at Mount Kenya University — constantly pushing the boundaries
+                of what I can build, from Django-powered backends to
+                production-ready Android apps integrated with Firebase and AI.
+              </p>
+              <p>
+                I don't just write code. I engineer solutions, sweat the
+                details, and build things I'm genuinely proud of.
+              </p>
+            </div>
+
+            <!-- Stats -->
+            <div class="about-stats">
+              <div class="about-stat">
+                <span class="about-stat-number">5+</span>
+                <span class="about-stat-label">Projects Built</span>
+              </div>
+              <div class="about-stat">
+                <span class="about-stat-number">5+</span>
+                <span class="about-stat-label">Technologies</span>
+              </div>
+              <div class="about-stat">
+                <span class="about-stat-number">2025</span>
+                <span class="about-stat-label">Started Coding</span>
+              </div>
+            </div>
+
+            <!-- CTA Buttons -->
+            <div class="about-btns">
+              <a href="/contact" class="skills-btn-primary">
+                <i class="bi bi-envelope-fill me-2"></i> Hire Me
+              </a>
+              <a href="{% static 'file/Ibrahim_Mutisia.pdf' %}" download
+                 class="skills-btn-outline">
+                <i class="bi bi-download me-2"></i> Download CV
+              </a>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Card Footer Strip -->
+        <div class="about-card-footer">
+          <span><i class="bi bi-geo-alt-fill me-1"></i> Nairobi, Kenya</span>
+          <span><i class="bi bi-clock-fill me-1"></i> EAT — UTC+3</span>
+          <span><i class="bi bi-briefcase-fill me-1"></i> Open to Freelance & Full-time</span>
+        </div>
+
+      </div>
+      <!-- END OUTER CARD -->
+
+    </div>
+  </section>
+</div>
+
+{% endblock %}

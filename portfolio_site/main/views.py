@@ -6,8 +6,8 @@ from .models import Project
 # Create your views here.
 def home(request):
     return render(request, 'home.html',)
-def skills(request):
-    return render(request,'skills.html')
+def about(request):
+    return render(request,'about.html')
 def services(request):
     return render(request,'services.html')
 def projects(request):
@@ -16,27 +16,57 @@ def projects(request):
 def project_detail(request,slug):
     project = get_object_or_404(Project,slug=slug)
     return render(request,'project_detail.html', {'project':project})
-def about(request):
-    return render(request, 'about.html')
-
 def contact(request):
     if request.method == 'POST':
         recipient = getattr(settings, 'CONTACT_EMAIL', settings.EMAIL_HOST_USER)
 
-        name = request.POST.get('name')
-        email = request.POST.get('email')
-        message = request.POST.get('message')
+        # --- fields shared by both forms ---
+        name    = request.POST.get('name')
+        email   = request.POST.get('email')
 
-        subject = f"New Service Inquiry from {name}"
+        # --- fields unique to each form ---
+        message         = request.POST.get('message')           # contact form
+        service         = request.POST.get('service')           # service request form
+        project_details = request.POST.get('project_details')  # service request form
 
-        body = f"""
+        # --- build email depending on which form was submitted ---
+        if service:
+            # came from services page request form
+            subject = f"New Service Request — {service} from {name}"
+            body = f"""
+You have received a new service request from your portfolio website.
+
+-----------------------------
+CLIENT DETAILS
+-----------------------------
+Full Name:      {name}
+Email Address:  {email}
+
+-----------------------------
+SERVICE REQUESTED
+-----------------------------
+{service}
+
+-----------------------------
+PROJECT DETAILS
+-----------------------------
+{project_details}
+
+-----------------------------
+Reply directly to this email to respond to the client.
+"""
+
+        else:
+            # came from contact page form
+            subject = f"New Contact Message from {name}"
+            body = f"""
 You have received a new message from your portfolio website.
 
 -----------------------------
 CLIENT DETAILS
 -----------------------------
-Full Name: {name}
-Email Address: {email}
+Full Name:      {name}
+Email Address:  {email}
 
 -----------------------------
 MESSAGE
@@ -52,12 +82,16 @@ Reply directly to this email to respond to the client.
             body=body,
             from_email=settings.DEFAULT_FROM_EMAIL,
             to=[recipient],
-            reply_to=[email],  # 🔥 This makes reply go to client
+            reply_to=[email],
         )
 
         email_message.send()
 
-        return render(request, 'contact.html', {'success': True})
+        # --- redirect back to whichever page submitted the form ---
+        if service:
+            return render(request, 'services.html', {'success': True})
+        else:
+            return render(request, 'contact.html', {'success': True})
 
     return render(request, 'contact.html')
 

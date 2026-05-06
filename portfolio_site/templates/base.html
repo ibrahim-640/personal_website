@@ -5,11 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}{% endblock %}</title>
+
+    <!-- 1. Bootstrap FIRST -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- 2. Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
 
+    <!-- 3. YOUR CSS LAST — always wins over Bootstrap -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
@@ -34,7 +40,7 @@
 <div id="navbarNav">
   <ul class="navbar-nav ms-auto" id="navLinks">
     <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
-    <li class="nav-item"><a class="nav-link" href="{% url 'skills' %}">Skills</a></li>
+    <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">about</a></li>
     <li class="nav-item"><a class="nav-link" href="{% url 'projects' %}">Projects</a></li>
     <li class="nav-item"><a class="nav-link" href="{% url 'services' %}">Services</a></li>
     <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Contact</a></li>
@@ -144,138 +150,347 @@ document.addEventListener("DOMContentLoaded", function(){
 </script>
 <!-- ================= CHATBOT ================= -->
 
+<!-- ================= CHATBOT ================= -->
+
 <div id="portfolio-chatbot">
 
   <div id="chatbot-button">💬</div>
 
   <div id="chatbot-window">
-      <div class="chat-header">
-          Portfolio Assistant
-          <span id="chatbot-close">✖</span>
-      </div>
+    <div class="chat-header">
+      Portfolio Assistant
+      <span id="chatbot-close">✖</span>
+    </div>
 
-  <div id="chatbot-messages">
+    <div id="chatbot-messages">
       <div class="bot-msg">
         Hi 👋 I'm Ibrahim's assistant.
         Ask me anything about projects, skills, hiring, or contact.
       </div>
-  </div>
+    </div>
 
-  <div class="chat-input">
+    <div class="chat-input">
       <input type="text" id="chatbot-input" placeholder="Ask something...">
       <button id="chatbot-send">Send</button>
-  </div>
+    </div>
 
   </div>
-
 </div>
+
+<!-- ================= WHATSAPP ================= -->
 <div id="whatsapp-button">
   <i class="fab fa-whatsapp"></i>
 </div>
+
+<!-- ================= URLS ================= -->
 <script>
 const URLS = {
-  home: "{% url 'home' %}",
+  home:     "{% url 'home' %}",
   projects: "{% url 'projects' %}",
-  skills: "{% url 'skills' %}",
-  contact: "{% url 'contact' %}",
+  about:    "{% url 'about' %}",
+  contact:  "{% url 'contact' %}",
   services: "{% url 'services' %}",
-
 };
 </script>
 
+<!-- ================= CHATBOT SCRIPT ================= -->
 <script>
-document.addEventListener("DOMContentLoaded", function(){
+document.addEventListener("DOMContentLoaded", function () {
 
-    const btn = document.getElementById("chatbot-button");
-    const win = document.getElementById("chatbot-window");
-    const close = document.getElementById("chatbot-close");
-    const send = document.getElementById("chatbot-send");
-    const input = document.getElementById("chatbot-input");
+    const btn      = document.getElementById("chatbot-button");
+    const win      = document.getElementById("chatbot-window");
+    const close    = document.getElementById("chatbot-close");
+    const send     = document.getElementById("chatbot-send");
+    const input    = document.getElementById("chatbot-input");
     const messages = document.getElementById("chatbot-messages");
 
-    if(!btn) return; // exit if button doesn't exist
+    if (!btn) return;
 
-    // Start alert animation when page loads
+    /* ── alert glow on load ── */
     btn.classList.add('alert');
 
-    // Open chatbot
-    btn.onclick = () => {
+    /* ── open / close ── */
+    btn.onclick   = () => {
         win.style.display = "flex";
-        btn.classList.remove('alert'); // stop alert when opened
+        btn.classList.remove('alert');
     };
-
-    // Close chatbot
     close.onclick = () => {
         win.style.display = "none";
     };
 
-    // Send message
+    /* ── send triggers ── */
     send.onclick = respond;
-    input.addEventListener("keypress", e=>{
-        if(e.key === "Enter") respond();
+    input.addEventListener("keypress", e => {
+        if (e.key === "Enter") respond();
     });
 
-    function botMessage(text){
-        messages.innerHTML += `<div class="bot-msg">${text}</div>`;
+    /* ══════════════════════════════════
+       QUICK REPLY CHIPS
+    ══════════════════════════════════ */
+ function showQuickReplies() {
+    const chips = [
+        "What services do you offer?",
+        "What is your tech stack?",
+        "How do I hire you?",
+        "Show me your projects",
+        "How much do you charge?",
+        "How can I contact you?",
+    ];
+
+    /* outer wrapper keeps chips contained */
+    const outer = document.createElement("div");
+    outer.className = "quick-replies-wrapper";
+    outer.id = "quick-replies";
+
+    /* label above chips */
+    const label = document.createElement("p");
+    label.className = "quick-replies-label";
+    label.textContent = "Suggested questions:";
+    outer.appendChild(label);
+
+    /* chips row */
+    const wrap = document.createElement("div");
+    wrap.className = "quick-replies";
+
+    chips.forEach(chip => {
+        const chipBtn = document.createElement("button");
+        chipBtn.className = "quick-reply-btn";
+        chipBtn.textContent = chip;
+        chipBtn.onclick = () => {
+            input.value = chip;
+            outer.remove();
+            respond();
+        };
+        wrap.appendChild(chipBtn);
+    });
+
+    outer.appendChild(wrap);
+    messages.appendChild(outer);
+    messages.scrollTop = messages.scrollHeight;
+}
+
+    /* ══════════════════════════════════
+       TYPING INDICATOR
+    ══════════════════════════════════ */
+    function showTyping() {
+        const el = document.createElement("div");
+        el.className = "bot-msg typing-indicator";
+        el.id = "typing";
+        el.innerHTML = "<span></span><span></span><span></span>";
+        messages.appendChild(el);
         messages.scrollTop = messages.scrollHeight;
     }
 
-    function userMessage(text){
-        messages.innerHTML += `<div class="user-msg">${text}</div>`;
+    function hideTyping() {
+        const el = document.getElementById("typing");
+        if (el) el.remove();
     }
 
-    function respond(){
-        let text = input.value.toLowerCase().trim();
-        if(!text) return;
+    /* ══════════════════════════════════
+       MESSAGE RENDERERS
+    ══════════════════════════════════ */
+    function botMessage(html) {
+        hideTyping();
+        const el = document.createElement("div");
+        el.className = "bot-msg";
+        el.innerHTML = html;
+        messages.appendChild(el);
+        messages.scrollTop = messages.scrollHeight;
+    }
+
+    function userMessage(text) {
+        const el = document.createElement("div");
+        el.className = "user-msg";
+        el.textContent = text;
+        messages.appendChild(el);
+        messages.scrollTop = messages.scrollHeight;
+    }
+
+    /* ══════════════════════════════════
+       KNOWLEDGE BASE
+    ══════════════════════════════════ */
+    function getReply(text) {
+        const t = text.toLowerCase();
+
+        /* --- greeting --- */
+        if (t.includes("hi") || t.includes("hello") || t.includes("hey")) {
+            return {
+                msg: `Hey there! 👋 I'm Ibrahim's portfolio assistant.<br>
+                      I can tell you about his <b>services</b>, <b>skills</b>,
+                      <b>projects</b>, <b>pricing</b>, or help you
+                      <b>get in touch</b>.<br><br>
+                      What would you like to know?`,
+                redirect: null
+            };
+        }
+
+        /* --- services --- */
+        if (t.includes("service") || t.includes("offer") || t.includes("what do you do")) {
+            return {
+                msg: `Ibrahim offers three core services:<br><br>
+                      🌐 <b>Web Development</b> — Django, Python, HTML/CSS/Bootstrap<br>
+                      📱 <b>Mobile App Development</b> — Android with Kotlin & Firebase<br>
+                      🤖 <b>AI-Integrated Apps</b> — Chatbots, smart automation, AI APIs<br><br>
+                      <a href="${URLS.services}" class="chat-link">View all services →</a>`,
+                redirect: null
+            };
+        }
+
+        /* --- tech stack / skills --- */
+        if (t.includes("skill") || t.includes("stack") || t.includes("technology") || t.includes("tech")) {
+            return {
+                msg: `Ibrahim's tech stack includes:<br><br>
+                      🐍 Python / Django<br>
+                      📱 Kotlin / Android<br>
+                      🔥 Firebase<br>
+                      🤖 Artificial Intelligence<br>
+                      🎨 HTML / CSS / Bootstrap<br><br>
+                      <a href="${URLS.about}" class="chat-link">See full skill breakdown →</a>`,
+                redirect: null
+            };
+        }
+
+        /* --- projects --- */
+        if (t.includes("project") || t.includes("portfolio") ||
+            t.includes("work") || t.includes("built") || t.includes("show")) {
+            return {
+                msg: `I'd love to show you what Ibrahim has built! Redirecting to projects...`,
+                redirect: URLS.projects
+            };
+        }
+
+        /* --- pricing / cost --- */
+        if (t.includes("price") || t.includes("cost") || t.includes("charge") ||
+            t.includes("rate")  || t.includes("fee")  || t.includes("how much")) {
+            return {
+                msg: `Pricing depends on the project scope and complexity.<br><br>
+                      💡 The process is simple:<br>
+                      1️⃣ Submit your project details<br>
+                      2️⃣ Receive a custom quote within 24 hours<br>
+                      3️⃣ Pay a 50% deposit via PayPal to begin<br><br>
+                      <a href="${URLS.services}#request-form" class="chat-link">Request a quote →</a>`,
+                redirect: null
+            };
+        }
+
+        /* --- payment --- */
+        if (t.includes("payment") || t.includes("paypal") ||
+            t.includes("pay")     || t.includes("deposit")) {
+            return {
+                msg: `All payments are handled securely through <b>PayPal</b>.<br><br>
+                      💳 A <b>50% deposit</b> is required to start work and the
+                      remaining <b>50%</b> is paid on final delivery.<br><br>
+                      <a href="${URLS.services}" class="chat-link">See full payment process →</a>`,
+                redirect: null
+            };
+        }
+
+        /* --- hire / contact --- */
+        if (t.includes("hire") || t.includes("contact") || t.includes("reach") ||
+            t.includes("email") || t.includes("get in touch") || t.includes("message")) {
+            return {
+                msg: `You can reach Ibrahim directly on the contact page.
+                      He typically responds within <b>24 hours</b>. Redirecting...`,
+                redirect: URLS.contact
+            };
+        }
+
+        /* --- about / background --- */
+        if (t.includes("about") || t.includes("who")        || t.includes("ibrahim") ||
+            t.includes("background") || t.includes("experience") || t.includes("education")) {
+            return {
+                msg: `Ibrahim is a Full-Stack Developer & Android Engineer
+                      based in <b>Nairobi, Kenya</b>.<br><br>
+                      He studied at <b>Emobilis Institute of Technology</b>
+                      and <b>Moringa School</b>, and is currently pursuing a
+                      <b>Bachelor of IT</b> at Mount Kenya University.<br><br>
+                      <a href="${URLS.about}" class="chat-link">Read full story →</a>`,
+                redirect: null
+            };
+        }
+
+        /* --- location --- */
+        if (t.includes("location") || t.includes("where") ||
+            t.includes("nairobi")  || t.includes("kenya")) {
+            return {
+                msg: `Ibrahim is based in <b>Nairobi, Kenya</b> 🇰🇪 and works
+                      with clients both locally and internationally. 🌍`,
+                redirect: null
+            };
+        }
+
+        /* --- home --- */
+        if (t.includes("home")) {
+            return {
+                msg: `Taking you home...`,
+                redirect: URLS.home
+            };
+        }
+
+        /* --- fallback --- */
+        return {
+            msg: `I'm not sure about that, but I can help you with:<br><br>
+                  • Services Ibrahim offers<br>
+                  • His tech stack & skills<br>
+                  • Project portfolio<br>
+                  • Pricing & payment<br>
+                  • How to hire him<br>
+                  • His background & education<br><br>
+                  What would you like to know?`,
+            redirect: null
+        };
+    }
+
+    /* ══════════════════════════════════
+       MAIN RESPOND FUNCTION
+    ══════════════════════════════════ */
+    function respond() {
+        const text = input.value.trim();
+        if (!text) return;
 
         userMessage(text);
+        input.value = "";
 
-        let reply = "I can guide you through Ibrahim's portfolio.";
+        /* remove quick replies once user interacts */
+        const qr = document.getElementById("quick-replies");
+        if (qr) qr.remove();
 
-        if(text.includes("project")){
-            reply="Opening projects...";
-            setTimeout(()=> window.location.href = URLS.projects,700);
-        }
-        else if(text.includes("contact") || text.includes("hire")){
-            reply="Opening contact page...";
-            setTimeout(()=> window.location.href = URLS.contact,700);
-        }
-        else if(text.includes("skill")){
-            reply="Opening skills...";
-            setTimeout(()=> window.location.href = URLS.skills,700);
-        }
-        else if(text.includes("service")){
-            reply="Opening services...";
-            setTimeout(()=> window.location.href = URLS.services,700);
-        }
-        else if(text.includes("home")){
-            setTimeout(()=> window.location.href = URLS.home,700);
-        }
+        showTyping();
 
-        setTimeout(()=> botMessage(reply),400);
-        input.value="";
+        const { msg, redirect } = getReply(text);
+
+        setTimeout(() => {
+            botMessage(msg);
+            if (redirect) {
+                setTimeout(() => window.location.href = redirect, 1000);
+            }
+        }, 700);
     }
 
+    /* ── show quick replies on load ── */
+    showQuickReplies();
+
 });
 </script>
+
+<!-- ================= WHATSAPP SCRIPT ================= -->
 <script>
-document.addEventListener("DOMContentLoaded", function(){
-  const whatsappBtn = document.getElementById("whatsapp-button");
-  if(!whatsappBtn) return;
+document.addEventListener("DOMContentLoaded", function () {
+    const whatsappBtn = document.getElementById("whatsapp-button");
+    if (!whatsappBtn) return;
 
-  // start glow animation
-  whatsappBtn.classList.add('alert');
+    whatsappBtn.classList.add('alert');
 
-  // open WhatsApp chat on click
-  whatsappBtn.onclick = () => {
-      const number = "254757894179";
-      const text = encodeURIComponent("Hello Ibrahim, I saw your portfolio and want to work with you.");
-      const url = `https://wa.me/${number}?text=${text}`;
-      window.open(url, "_blank");
-  };
+    whatsappBtn.onclick = () => {
+        const number = "254757894179";
+        const text   = encodeURIComponent(
+            "Hello Ibrahim, I saw your portfolio and want to work with you."
+        );
+        const url = `https://wa.me/${number}?text=${text}`;
+        window.open(url, "_blank");
+    };
 });
 </script>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
