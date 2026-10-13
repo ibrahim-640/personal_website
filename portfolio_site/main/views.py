@@ -8,14 +8,11 @@ def home(request):
     return render(request, 'home.html',)
 def about(request):
     return render(request,'about.html')
-def services(request):
-    return render(request,'services.html')
-def projects(request):
-    projects = Project.objects.all().order_by('-created_at')
-    return render(request,'projects.html',{'projects':projects})
-def project_detail(request,slug):
-    project = get_object_or_404(Project,slug=slug)
-    return render(request,'project_detail.html', {'project':project})
+def process(request):
+    return render(request,'Process.html')
+def packages(request):
+    packages = Package.objects.all().order_by('-created_at')
+    return render(request,'Packages.html',{'projects':packages})
 def contact(request):
     if request.method == 'POST':
         recipient = getattr(settings, 'CONTACT_EMAIL', settings.EMAIL_HOST_USER)

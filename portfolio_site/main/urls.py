@@ -5,10 +5,9 @@ from .views import force_fix_images
 
 urlpatterns =[
     path('',views.home,name='home'),
-    path('projects/<slug:slug>/',views.project_detail,name='project_detail'),
-    path('services/',views.services,name='services'),
+    path('packages/',views.packages,name='packages'),
     path('about/',views.about,name='about'),
-    path('projects/',views.projects,name='projects'),
+    path('process/',views.process,name='process'),
     path('contact/',views.contact,name='contact'),
     path('force-fix-images/', force_fix_images, name='force_fix_images'),
 ]

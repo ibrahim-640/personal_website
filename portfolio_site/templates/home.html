@@ -1,145 +1,155 @@
 {% extends 'base.html' %}
+
+{% block title %}MUTITECH | AI-integrated websites for every budget{% endblock %}
+
 {% block content %}
 
-<div class="skills-page container-fluid px-0">
-
-  <!-- ======= HERO INTRO ======= -->
-  <section class="skills-hero">
-    <div class="skills-hero-inner">
-
-      <h1 class="skills-hero-tag"><strong>Full-Stack Developer. Android Builder. Problem Solver.</strong></h1>
-      <p class="skills-hero-title">
-        I Build Things That Live on the Web
-        and Run on Your Phone<br>From Django-powered backends to sleek Android apps — <br>I turn ideas into
-        real, working products.Let's build something great together.
+  <!-- ===== HERO ===== -->
+  <section id="hero">
+    <div id="hero-text">
+      <p id="availability-badge" class="label"><span id="availability-dot"></span> Available for new projects</p>
+      <h1>AI-integrated websites, <span class="highlight">built for your budget.</span></h1>
+      <p id="hero-intro">
+        MUTITECH designs and ships fast, modern websites with AI built in: chatbots,
+        smart forms and automation. From KES 15,000 to KES 50,000, with clear scope
+        and delivery dates.
       </p>
-
-      <div class="skills-hero-btns">
-        <a href="/projects" class="skills-btn-primary">
-          <i class="bi bi-grid-fill me-2"></i>View My Work
-        </a>
-        <a href="/contact" class="skills-btn-outline">
-          <i class="bi bi-envelope-fill me-2"></i>Get In Touch
-        </a>
+      <div id="hero-buttons">
+        <a id="btn-packages" href="#packages">See packages</a>
+        <a id="btn-quote" href="#contact">Get a free quote</a>
       </div>
-
     </div>
+
+    <aside id="hero-card">
+      <p class="label">Typical delivery</p>
+      <h2>Live in 1–3 weeks</h2>
+      <p>Design, build, AI features, hosting setup and handover.</p>
+      <ul id="hero-stats">
+        <li><strong>15K</strong> <span class="label">From (KES)</span></li>
+        <li><strong>50K</strong> <span class="label">Up to (KES)</span></li>
+        <li><strong>100%</strong> <span class="label">Mobile-ready</span></li>
+      </ul>
+    </aside>
   </section>
 
-  <!-- ======= SKILLS SECTION ======= -->
-  <div class="container py-5">
+  <!-- ===== PACKAGES ===== -->
+  <section id="packages">
+    <p class="label">Packages</p>
+    <h2>Pick the size that fits. <span class="highlight">Upgrade anytime.</span></h2>
 
-    <h2 class="section-title text-center mb-5">My Skills</h2>
+    <div id="package-list">
+      <article class="package">
+        <p class="label">Starter</p>
+        <p class="price">KES 15K</p>
+        <h3>Smart landing page</h3>
+        <ul>
+          <li>1-page responsive site</li>
+          <li>Contact form with email delivery</li>
+          <li>Basic AI FAQ chatbot</li>
+          <li>SEO basics and fast hosting setup</li>
+        </ul>
+        <a href="#contact">Choose Starter</a>
+      </article>
 
-    <!-- SKILLS CARD -->
-    <div class="skills-card">
+      <article class="package featured">
+        <p class="label">Growth · most popular</p>
+        <p class="price">KES 30K</p>
+        <h3>Business website</h3>
+        <ul>
+          <li>Up to 6 pages with custom design</li>
+          <li>AI chatbot trained on your business</li>
+          <li>Booking or inquiry system</li>
+          <li>Analytics and M-Pesa-ready checkout option</li>
+        </ul>
+        <a href="#contact">Choose Growth</a>
+      </article>
 
-      <div class="skill-item">
-        <label>Python / Django</label>
-        <div class="progress">
-          <div class="progress-bar" role="progressbar" style="width:90%;">90%</div>
-        </div>
-      </div>
-
-      <div class="skill-item">
-        <label>Kotlin / Android</label>
-        <div class="progress">
-          <div class="progress-bar bg-success" role="progressbar" style="width:85%;">85%</div>
-        </div>
-      </div>
-
-      <div class="skill-item">
-        <label>Firebase</label>
-        <div class="progress">
-          <div class="progress-bar bg-success" role="progressbar" style="width:90%;">90%</div>
-        </div>
-      </div>
-
-      <div class="skill-item">
-        <label>Artificial Intelligence</label>
-        <div class="progress">
-          <div class="progress-bar bg-success" role="progressbar" style="width:85%;">85%</div>
-        </div>
-      </div>
-
-      <div class="skill-item">
-        <label>HTML / CSS / Bootstrap</label>
-        <div class="progress">
-          <div class="progress-bar bg-info" role="progressbar" style="width:95%;">95%</div>
-        </div>
-      </div>
-
+      <article class="package">
+        <p class="label">Pro</p>
+        <p class="price">KES 50K</p>
+        <h3>AI-powered platform</h3>
+        <ul>
+          <li>Full web app with user accounts</li>
+          <li>AI features: content, search or assistants</li>
+          <li>Admin dashboard</li>
+          <li>30 days post-launch support</li>
+        </ul>
+        <a href="#contact">Choose Pro</a>
+      </article>
     </div>
 
-    <!-- EXPERIENCE + EDUCATION -->
-    <div class="tabs-card mt-5">
+    <p id="package-note" class="label">Need something in between? Every package can be tailored.</p>
+  </section>
 
-      <ul class="nav nav-pills custom-tabs mb-4">
-        <li class="nav-item w-50">
-          <button class="nav-link active" data-bs-toggle="pill" data-bs-target="#tab-1">
-            Experience
-          </button>
-        </li>
-        <li class="nav-item w-50">
-          <button class="nav-link" data-bs-toggle="pill" data-bs-target="#tab-2">
-            Education
-          </button>
-        </li>
-      </ul>
+  <!-- ===== PROCESS ===== -->
+  <section id="process-steps">
+    <p class="label">Process</p>
+    <h2>From idea to live site in four steps</h2>
 
-      <div class="tab-content">
+    <ol id="step-list">
+      <li class="step">
+        <span class="step-number">01</span>
+        <h3>Brief</h3>
+        <p>Tell me your goals and budget. You get a fixed quote.</p>
+      </li>
+      <li class="step">
+        <span class="step-number">02</span>
+        <h3>Design</h3>
+        <p>A clear layout preview for your approval.</p>
+      </li>
+      <li class="step">
+        <span class="step-number">03</span>
+        <h3>Build</h3>
+        <p>Development plus AI features, with progress updates.</p>
+      </li>
+      <li class="step">
+        <span class="step-number">04</span>
+        <h3>Launch</h3>
+        <p>Go live, handover and support.</p>
+      </li>
+    </ol>
 
-        <!-- EXPERIENCE -->
-        <div id="tab-1" class="tab-pane fade show active">
-          <div class="row gy-4">
-            <div class="col-sm-6">
-              <h5>CI/CD</h5>
-              <p class="text-muted">Self taught - in progress</p>
-            </div>
-            <div class="col-sm-6">
-              <h5>Web Development</h5>
-              <p class="text-muted">2025 - Present</p>
-            </div>
-            <div class="col-sm-6">
-              <h5>Android Development</h5>
-              <p class="text-muted">2025 - Present</p>
-            </div>
-            <div class="col-sm-6">
-              <h5>Artificial Intelligence</h5>
-              <p class="text-muted">2025 - Present</p>
-            </div>
-          </div>
-        </div>
+    <a id="process-link" href="{% url 'process' %}">See the full process</a>
+  </section>
 
-        <!-- EDUCATION -->
-        <div id="tab-2" class="tab-pane fade">
-          <div class="row gy-4">
-            <div class="col-sm-6">
-              <h5>Web Development</h5>
-              <p class="text-muted">Jan – May 2025</p>
-              <strong>Emobilis Institute of Technology</strong>
-            </div>
-            <div class="col-sm-6">
-              <h5>Android Development</h5>
-              <p class="text-muted">Jan – May 2025</p>
-              <strong>Emobilis Institute of Technology</strong>
-            </div>
-            <div class="col-sm-6">
-              <h5>Artificial Intelligence</h5>
-              <p class="text-muted">November – December 2025</p>
-              <strong>Moringa School</strong>
-            </div>
-            <div class="col-sm-6">
-              <h5>Bachelor of Information and Technology</h5>
-              <p class="text-muted">September 2025 – 2028</p>
-              <strong>Mount Kenya University</strong>
-            </div>
-          </div>
-        </div>
+  <!-- ===== CONTACT FORM ===== -->
+  <section id="contact">
+    <p class="label">Contact</p>
+    <h2>Tell me about <span class="highlight">your project</span></h2>
 
+    <form id="contact-form" method="post" action="{% url 'contact' %}" novalidate>
+      {% csrf_token %}
+
+      <div class="field">
+        <label for="name">Name</label>
+        <input id="name" name="name" type="text" autocomplete="name" required>
+        <span class="field-error"></span>
       </div>
-    </div>
-  </div>
-</div>
+
+      <div class="field">
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" autocomplete="email" required>
+        <span class="field-error"></span>
+      </div>
+
+      <div class="field">
+        <label for="package">Package</label>
+        <select id="package" name="package">
+          <option value="starter">Starter · KES 15K</option>
+          <option value="growth" selected>Growth · KES 30K</option>
+          <option value="pro">Pro · KES 50K</option>
+          <option value="unsure">Not sure yet</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="message">Project details</label>
+        <textarea id="message" name="message" rows="5" required></textarea>
+        <span class="field-error"></span>
+      </div>
+
+      <button type="submit">Send request</button>
+    </form>
+  </section>
 
 {% endblock %}

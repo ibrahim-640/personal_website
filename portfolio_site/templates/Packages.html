@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+
+{% block title %}Packages | MUTITECH{% endblock %}
+{% block meta_description %}AI-integrated website packages from KES 15,000 to KES 50,000. Starter, Growth and Pro.{% endblock %}
+
+{% block content %}
+
+  <!-- ===== PAGE HEADER ===== -->
+  <section id="packages-hero">
+    <p class="label">Packages</p>
+    <h1>Pick the size that fits. <span class="highlight">Upgrade anytime.</span></h1>
+    <p id="packages-intro">
+      Three clear packages for AI-integrated websites, from KES 15,000 to KES 50,000.
+      Every project starts with a fixed quote, so you know the cost before work begins.
+    </p>
+  </section>
+
+  <!-- ===== PACKAGE CARDS ===== -->
+  <section id="package-list">
+    <article class="package">
+      <p class="label">Starter</p>
+      <p class="price">KES 15K</p>
+      <h2>Smart landing page</h2>
+      <p>For individuals and small businesses that need a professional online presence fast.</p>
+      <ul>
+        <li>1-page responsive site</li>
+        <li>Contact form with email delivery</li>
+        <li>Basic AI FAQ chatbot</li>
+        <li>SEO basics and fast hosting setup</li>
+      </ul>
+      <a href="{% url 'contact' %}?package=starter">Choose Starter</a>
+    </article>
+
+    <article class="package featured">
+      <p class="label">Growth · most popular</p>
+      <p class="price">KES 30K</p>
+      <h2>Business website</h2>
+      <p>For growing businesses that want to capture leads and bookings online.</p>
+      <ul>
+        <li>Up to 6 pages with custom design</li>
+        <li>AI chatbot trained on your business</li>
+        <li>Booking or inquiry system</li>
+        <li>Analytics and M-Pesa-ready checkout option</li>
+      </ul>
+      <a href="{% url 'contact' %}?package=growth">Choose Growth</a>
+    </article>
+
+    <article class="package">
+      <p class="label">Pro</p>
+      <p class="price">KES 50K</p>
+      <h2>AI-powered platform</h2>
+      <p>For businesses that need a full web application with their own users and data.</p>
+      <ul>
+        <li>Full web app with user accounts</li>
+        <li>AI features: content, search or assistants</li>
+        <li>Admin dashboard</li>
+        <li>30 days post-launch support</li>
+      </ul>
+      <a href="{% url 'contact' %}?package=pro">Choose Pro</a>
+    </article>
+  </section>
+
+  <!-- ===== COMPARISON TABLE ===== -->
+  <section id="compare">
+    <p class="label">Compare</p>
+    <h2>What's in each package</h2>
+
+    <table id="compare-table">
+      <thead>
+        <tr>
+          <th scope="col">Feature</th>
+          <th scope="col">Starter<br>KES 15K</th>
+          <th scope="col">Growth<br>KES 30K</th>
+          <th scope="col">Pro<br>KES 50K</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row">Pages</th><td>1</td><td>Up to 6</td><td>Custom web app</td></tr>
+        <tr><th scope="row">Responsive design</th><td>Yes</td><td>Yes</td><td>Yes</td></tr>
+        <tr><th scope="row">Contact form with email delivery</th><td>Yes</td><td>Yes</td><td>Yes</td></tr>
+        <tr><th scope="row">AI chatbot</th><td>Basic FAQ</td><td>Trained on your business</td><td>Custom AI features</td></tr>
+        <tr><th scope="row">Booking or inquiry system</th><td>No</td><td>Yes</td><td>Yes</td></tr>
+        <tr><th scope="row">User accounts</th><td>No</td><td>No</td><td>Yes</td></tr>
+        <tr><th scope="row">Admin dashboard</th><td>No</td><td>No</td><td>Yes</td></tr>
+        <tr><th scope="row">SEO basics</th><td>Yes</td><td>Yes</td><td>Yes</td></tr>
+        <tr><th scope="row">Analytics</th><td>No</td><td>Yes</td><td>Yes</td></tr>
+        <tr><th scope="row">M-Pesa checkout option</th><td>No</td><td>Yes</td><td>Yes</td></tr>
+        <tr><th scope="row">Hosting setup</th><td>Yes</td><td>Yes</td><td>Yes</td></tr>
+        <tr><th scope="row">Typical delivery</th><td>About 1 week</td><td>About 2 weeks</td><td>About 3 weeks</td></tr>
+        <tr><th scope="row">Post-launch support</th><td>7 days</td><td>14 days</td><td>30 days</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ===== INCLUDED IN EVERY PACKAGE ===== -->
+  <section id="included">
+    <p class="label">Every package</p>
+    <h2>Included with every project</h2>
+    <ul id="included-list">
+      <li><h3>Fixed quote</h3><p>You know the full cost before work begins.</p></li>
+      <li><h3>Mobile-ready</h3><p>Every site works on phones, tablets and desktops.</p></li>
+      <li><h3>AI built in</h3><p>At least one AI feature in every package.</p></li>
+      <li><h3>Handover</h3><p>Launch, walkthrough and support after go-live.</p></li>
+    </ul>
+  </section>
+
+  <!-- ===== FAQ ===== -->
+  <section id="faq">
+    <p class="label">FAQ</p>
+    <h2>Common questions</h2>
+
+    <details>
+      <summary>Can I upgrade later?</summary>
+      <p>Yes. Start with a smaller package and move up when your business needs more.</p>
+    </details>
+
+    <details>
+      <summary>What if I need something in between?</summary>
+      <p>Every package can be tailored. Tell me what you need and I'll quote it.</p>
+    </details>
+
+    <details>
+      <summary>How long does a project take?</summary>
+      <p>Most projects go live in 1–3 weeks, depending on the package.</p>
+    </details>
+
+    <details>
+      <summary>How do payments work?</summary>
+      <p>A 50% deposit starts the work and the remaining 50% is paid on final delivery.</p>
+    </details>
+
+    <details>
+      <summary>Is hosting included?</summary>
+      <p>Hosting setup is included. Domain registration and ongoing hosting fees are separate.</p>
+    </details>
+  </section>
+
+  <!-- ===== CTA ===== -->
+  <section id="packages-cta">
+    <h2>Not sure which package fits?</h2>
+    <p>Tell me about your project and get a fixed quote within 24 hours.</p>
+    <a href="{% url 'contact' %}">Get a free quote</a>
+  </section>
+
+{% endblock %}
