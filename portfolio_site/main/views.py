@@ -1,158 +1,65 @@
-from django.shortcuts import render, get_object_or_404
-from django.core.mail import EmailMessage
+import logging
 from django.conf import settings
-from .models import Project
+from django.contrib import messages
+from django.core.mail import EmailMessage
+from django.shortcuts import redirect, render
 
-# Create your views here.
+from .forms import InquiryForm
+
+logger = logging.getLogger(__name__)
+
+
 def home(request):
-    return render(request, 'home.html',)
+    return render(request, 'home.html')
+
+
 def about(request):
-    return render(request,'about.html')
-def process(request):
-    return render(request,'Process.html')
+    return render(request, 'about.html')
+
+
 def packages(request):
-    packages = Package.objects.all().order_by('-created_at')
-    return render(request,'Packages.html',{'projects':packages})
-def contact(request):
-    if request.method == 'POST':
-        recipient = getattr(settings, 'CONTACT_EMAIL', settings.EMAIL_HOST_USER)
+    return render(request, 'packages.html')
 
-        # --- fields shared by both forms ---
-        name    = request.POST.get('name')
-        email   = request.POST.get('email')
 
-        # --- fields unique to each form ---
-        message         = request.POST.get('message')           # contact form
-        service         = request.POST.get('service')           # service request form
-        project_details = request.POST.get('project_details')  # service request form
+def process(request):
+    return render(request, 'process.html')
 
-        # --- build email depending on which form was submitted ---
-        if service:
-            # came from services page request form
-            subject = f"New Service Request — {service} from {name}"
-            body = f"""
-You have received a new service request from your portfolio website.
 
------------------------------
-CLIENT DETAILS
------------------------------
-Full Name:      {name}
-Email Address:  {email}
+def send_inquiry_email(inquiry):
+    """Email the inquiry to you. A failure is logged but never loses the saved inquiry."""
+    recipient = getattr(settings, 'CONTACT_EMAIL', settings.EMAIL_HOST_USER)
+    body = f"""New quote request from the MUTITECH website.
 
------------------------------
-SERVICE REQUESTED
------------------------------
-{service}
+Name:     {inquiry.name}
+Email:    {inquiry.email}
+Package:  {inquiry.get_package_display()}
 
------------------------------
-PROJECT DETAILS
------------------------------
-{project_details}
+Project details:
+{inquiry.message}
 
------------------------------
 Reply directly to this email to respond to the client.
 """
-
-        else:
-            # came from contact page form
-            subject = f"New Contact Message from {name}"
-            body = f"""
-You have received a new message from your portfolio website.
-
------------------------------
-CLIENT DETAILS
------------------------------
-Full Name:      {name}
-Email Address:  {email}
-
------------------------------
-MESSAGE
------------------------------
-{message}
-
------------------------------
-Reply directly to this email to respond to the client.
-"""
-
-        email_message = EmailMessage(
-            subject=subject,
+    try:
+        EmailMessage(
+            subject=f"New MUTITECH inquiry: {inquiry.get_package_display()} from {inquiry.name}",
             body=body,
             from_email=settings.DEFAULT_FROM_EMAIL,
             to=[recipient],
-            reply_to=[email],
-        )
-
-        email_message.send()
-
-        # --- redirect back to whichever page submitted the form ---
-        if service:
-            return render(request, 'services.html', {'success': True})
-        else:
-            return render(request, 'contact.html', {'success': True})
-
-    return render(request, 'contact.html')
+            reply_to=[inquiry.email],
+        ).send()
+    except Exception:
+        logger.exception("Could not send inquiry email for inquiry %s", inquiry.pk)
 
 
-from django.http import HttpResponse
-import re
-import cloudinary.uploader
-from django.core.files.base import ContentFile
-import requests
-from io import BytesIO
-from .models import Project  # ← ADD THIS LINE!
+def contact(request):
+    if request.method == 'POST':
+        form = InquiryForm(request.POST)
+        if form.is_valid():
+            inquiry = form.save()
+            send_inquiry_email(inquiry)
+            messages.success(request, "Thanks! Your request was sent. Expect a fixed quote within 24 hours.")
+            return redirect('contact')
+        return render(request, 'contact.html', {'form': form})
 
-
-def force_fix_images(request):
-    output = []
-    fixed_count = 0
-    error_count = 0
-
-    # Get ALL projects
-    projects = Project.objects.all()
-    output.append(f"Found {projects.count()} projects")
-
-    for project in projects:
-        output.append(f"\n--- Processing: {project.title} ---")
-
-        # Check if image exists and is malformed
-        if project.image:
-            old_url = str(project.image)
-            output.append(f"Current URL: {old_url[:100]}...")
-
-            # Extract clean Cloudinary URL if it exists in the mess
-            if 'res.cloudinary.com' in old_url:
-                # Extract just the Cloudinary part
-                match = re.search(r'(https?://res\.cloudinary\.com[^\s]+)', old_url)
-                if match:
-                    clean_url = match.group(1)
-                    output.append(f"Found Cloudinary URL: {clean_url}")
-
-                    # Test if the URL is actually accessible
-                    try:
-                        response = requests.head(clean_url, timeout=5)
-                        if response.status_code == 200:
-                            # URL works! Just save it
-                            project.image = clean_url
-                            project.save()
-                            output.append(f"✅ Saved clean URL")
-                            fixed_count += 1
-                        else:
-                            output.append(f"⚠️ URL returns {response.status_code}")
-                            # URL doesn't work, need to re-upload
-                            error_count += 1
-                    except:
-                        output.append(f"⚠️ URL not accessible")
-                        error_count += 1
-                else:
-                    output.append(f"❌ Could not extract Cloudinary URL")
-                    error_count += 1
-            else:
-                output.append(f"ℹ️ Not a Cloudinary URL - may need manual upload")
-        else:
-            output.append(f"ℹ️ No image")
-
-    output.append(f"\n=== SUMMARY ===")
-    output.append(f"✅ Fixed: {fixed_count}")
-    output.append(f"❌ Need manual re-upload: {error_count}")
-
-    return HttpResponse("<br>".join(output).replace("\n", "<br>"))
+    initial = {'package': request.GET.get('package', 'growth')}
+    return render(request, 'contact.html', {'form': InquiryForm(initial=initial)})

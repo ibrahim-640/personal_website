@@ -1,15 +1,11 @@
 from django.db import migrations
-from django.core.management import call_command
-import os
+
 
 def load_fixture(apps, schema_editor):
-    # ONLY load if NO projects exist (fresh database)
-    Project = apps.get_model('main', 'Project')
-    if Project.objects.count() == 0:
-        fixture_path = os.path.join(os.path.dirname(__file__), '../fixtures/projects_fixture.json')
-        if os.path.exists(fixture_path):
-            call_command('loaddata', 'projects_fixture.json', app_label='main')
-            print("✅ Loaded initial projects (fresh database only)")
+    # Intentionally empty: the Project model and its fixture were removed
+    # in the MUTITECH conversion. The file is kept so the migration history stays intact.
+    return
+
 
 class Migration(migrations.Migration):
     dependencies = [
@@ -17,5 +13,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunPython(load_fixture),
+        migrations.RunPython(load_fixture, migrations.RunPython.noop),
     ]

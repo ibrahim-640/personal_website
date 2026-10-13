@@ -1,37 +1,31 @@
-from cloudinary.models import CloudinaryField
 from django.db import models
-from django.utils.text import slugify
 
 
-class Project(models.Model):
-    CATEGORY_CHOICES = [
-        ('Web', 'Web Development'),
-        ('Android', 'Android Development'),
+class Inquiry(models.Model):
+    PACKAGE_CHOICES = [
+        ('starter', 'Starter · KES 15K'),
+        ('growth', 'Growth · KES 30K'),
+        ('pro', 'Pro · KES 50K'),
+        ('unsure', 'Not sure yet'),
+    ]
+    STATUS_CHOICES = [
+        ('new', 'New'),
+        ('contacted', 'Contacted'),
+        ('quoted', 'Quoted'),
+        ('won', 'Won'),
+        ('closed', 'Closed'),
     ]
 
-    title = models.CharField(max_length=200)
-    slug = models.SlugField(unique=True, blank=True)
-    short_description = models.CharField(max_length=255, blank=True)
-    description = models.TextField()
-    technologies = models.CharField(
-        max_length=255,
-        help_text="Technologies used in the project, separated by commas",
-        blank=True
-    )
-    image = CloudinaryField('image', blank=True, null=True)  # ✅ moved here, directly on Project
-    project_url = models.URLField(blank=True)
-    github_url = models.URLField(blank=True)
-    category = models.CharField(
-        max_length=50,
-        choices=CATEGORY_CHOICES,
-        default='Web'
-    )
+    name = models.CharField(max_length=120)
+    email = models.EmailField()
+    package = models.CharField(max_length=20, choices=PACKAGE_CHOICES, default='growth')
+    message = models.TextField()
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='new')
     created_at = models.DateTimeField(auto_now_add=True)
 
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.title)  # ✅ use slugify instead of manual replace
-        super().save(*args, **kwargs)
+    class Meta:
+        ordering = ['-created_at']
+        verbose_name_plural = 'Inquiries'
 
     def __str__(self):
-        return self.title
+        return f"{self.name} · {self.get_package_display()}"
