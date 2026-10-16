@@ -1,10 +1,109 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% block title %}About | MUTITECH{% endblock %}
+{% block meta_description %}MUTITECH builds AI-integrated websites for businesses in Kenya and beyond, from KES 15,000 to KES 50,000.{% endblock %}
+
+{% block content %}
+
+  <!-- ===== PAGE HEADER ===== -->
+  <section id="about-hero">
+    <p class="label">About</p>
+    <h1>AI-integrated apps, <span class="highlight">built for every budget.</span></h1>
+    <p id="about-intro">
+      MUTITECH is a Nairobi-based team that builds fast, modern AI-integrated websites,
+      so small businesses can get the same smart tools as big ones without the big price.
+    </p>
+  </section>
+
+  <!-- ===== THE TEAM ===== -->
+  <section id="team">
+    <p class="label">Who we are</p>
+    <h2>A small team that delivers</h2>
+    <p>
+      MUTITECH is a small team that takes every project from the first brief to launch.
+      You get a fixed price, a clear timeline and direct answers to your questions.
+    </p>
+  </section>
+
+  <!-- ===== WHAT WE BUILD ===== -->
+  <section id="services">
+    <p class="label">What we build</p>
+    <h2>AI-integrated websites</h2>
+    <p>Every project we deliver has AI built in, so your app works harder for your business.</p>
+
+    <div id="service-list">
+      <article class="service">
+        <h3>Chatbots</h3>
+        <p>Assistants that answer customer questions around the clock.</p>
+      </article>
+
+      <article class="service">
+        <h3>Smart forms</h3>
+        <p>Inquiry and booking forms that collect what you need and reach you instantly.</p>
+      </article>
+
+      <article class="service">
+        <h3>Automation</h3>
+        <p>Repetitive tasks handled for you, so you save time and avoid mistakes.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===== HOW WE WORK ===== -->
+  <section id="principles">
+    <p class="label">How we work</p>
+    <h2>What you can expect</h2>
+
+    <ul id="principle-list">
+      <li>
+        <h3>Fixed prices</h3>
+        <p>You see the full cost before any work begins, from KES 15,000 to KES 50,000.</p>
+      </li>
+      <li>
+        <h3>Clear timelines</h3>
+        <p>Most projects go live in 1–3 weeks, and you know where things stand at every step.</p>
+      </li>
+      <li>
+        <h3>Plain language</h3>
+        <p>No jargon. We explain what is being built and why, in words you can use to decide.</p>
+      </li>
+      <li>
+        <h3>Clear maintenance terms</h3>
+        <p>
+          The Pro package includes a short free maintenance period after launch.
+          After that, and for the Starter and Growth packages from launch day,
+          maintenance is a paid service.
+        </p>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ===== WHO IT'S FOR ===== -->
+  <section id="audience">
+    <p class="label">Who it's for</p>
+    <h2>Built for people starting small</h2>
+    <p>
+      MUTITECH works best for small businesses, startups and organisations that need a
+      professional online presence with AI features, without a big budget or a long wait.
+    </p>
+  </section>
+
+  <!-- ===== LOCATION ===== -->
+  <section id="location">
+    <p class="label">Where we are</p>
+    <h2>Nairobi, Kenya</h2>
+    <p>
+      Based in Nairobi and working with clients across Kenya and internationally,
+      by WhatsApp, email and video call.
+    </p>
+  </section>
+
+  <!-- ===== CTA ===== -->
+  <section id="about-cta">
+    <h2>Have a project in mind?</h2>
+    <p>Tell us what you need and get a fixed quote within 24 hours.</p>
+    <a href="{% url 'contact' %}">Get a free quote</a>
+    <a href="{% url 'packages' %}">See packages</a>
+  </section>
+
+{% endblock %}

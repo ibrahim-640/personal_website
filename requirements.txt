@@ -8,6 +8,6 @@ sqlparse==0.5.3
 whitenoise==6.5.0
 dj-database-url==1.2.0
 psycopg2-binary==2.9.11
+# needed by old migrations 0007 and 0008
 cloudinary==1.36.0
-django-cloudinary-storage==0.3.0
 requests==2.31.0

@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}MUTITECH | AI-integrated websites for every budget{% endblock %}
+{% block meta_description %}MUTITECH builds AI-integrated websites for every budget, from KES 15,000 to KES 50,000, with clear scope and delivery dates.{% endblock %}
 
 {% block content %}
 
@@ -16,7 +17,7 @@
       </p>
       <div id="hero-buttons">
         <a id="btn-packages" href="#packages">See packages</a>
-        <a id="btn-quote" href="#contact">Get a free quote</a>
+        <a id="btn-quote" href="{% url 'contact' %}">Get a free quote</a>
       </div>
     </div>
 
@@ -47,8 +48,9 @@
           <li>Contact form with email delivery</li>
           <li>Basic AI FAQ chatbot</li>
           <li>SEO basics and fast hosting setup</li>
+          <li>Maintenance available as a paid service</li>
         </ul>
-        <a href="#contact">Choose Starter</a>
+        <a href="{% url 'contact' %}?package=starter">Choose Starter</a>
       </article>
 
       <article class="package featured">
@@ -60,8 +62,9 @@
           <li>AI chatbot trained on your business</li>
           <li>Booking or inquiry system</li>
           <li>Analytics and M-Pesa-ready checkout option</li>
+          <li>Maintenance available as a paid service</li>
         </ul>
-        <a href="#contact">Choose Growth</a>
+        <a href="{% url 'contact' %}?package=growth">Choose Growth</a>
       </article>
 
       <article class="package">
@@ -72,25 +75,29 @@
           <li>Full web app with user accounts</li>
           <li>AI features: content, search or assistants</li>
           <li>Admin dashboard</li>
-          <li>30 days post-launch support</li>
+          <li>30 days free maintenance, then paid</li>
         </ul>
-        <a href="#contact">Choose Pro</a>
+        <a href="{% url 'contact' %}?package=pro">Choose Pro</a>
       </article>
     </div>
 
     <p id="package-note" class="label">Need something in between? Every package can be tailored.</p>
+    <p id="maintenance-note">
+      Maintenance after launch is a paid service on Starter and Growth. Pro includes
+      30 days of free maintenance, then it becomes paid.
+    </p>
   </section>
 
   <!-- ===== PROCESS ===== -->
   <section id="process-steps">
     <p class="label">Process</p>
-    <h2>From idea to live site in four steps</h2>
+    <h2>From idea to live in four steps</h2>
 
     <ol id="step-list">
       <li class="step">
         <span class="step-number">01</span>
         <h3>Brief</h3>
-        <p>Tell me your goals and budget. You get a fixed quote.</p>
+        <p>Tell us your goals and budget. You get a fixed quote.</p>
       </li>
       <li class="step">
         <span class="step-number">02</span>
@@ -105,51 +112,18 @@
       <li class="step">
         <span class="step-number">04</span>
         <h3>Launch</h3>
-        <p>Go live, handover and support.</p>
+        <p>Go live and handover.</p>
       </li>
     </ol>
 
     <a id="process-link" href="{% url 'process' %}">See the full process</a>
   </section>
 
-  <!-- ===== CONTACT FORM ===== -->
-  <section id="contact">
-    <p class="label">Contact</p>
-    <h2>Tell me about <span class="highlight">your project</span></h2>
-
-    <form id="contact-form" method="post" action="{% url 'contact' %}" novalidate>
-      {% csrf_token %}
-
-      <div class="field">
-        <label for="name">Name</label>
-        <input id="name" name="name" type="text" autocomplete="name" required>
-        <span class="field-error"></span>
-      </div>
-
-      <div class="field">
-        <label for="email">Email</label>
-        <input id="email" name="email" type="email" autocomplete="email" required>
-        <span class="field-error"></span>
-      </div>
-
-      <div class="field">
-        <label for="package">Package</label>
-        <select id="package" name="package">
-          <option value="starter">Starter · KES 15K</option>
-          <option value="growth" selected>Growth · KES 30K</option>
-          <option value="pro">Pro · KES 50K</option>
-          <option value="unsure">Not sure yet</option>
-        </select>
-      </div>
-
-      <div class="field">
-        <label for="message">Project details</label>
-        <textarea id="message" name="message" rows="5" required></textarea>
-        <span class="field-error"></span>
-      </div>
-
-      <button type="submit">Send request</button>
-    </form>
+  <!-- ===== FINAL CTA ===== -->
+  <section id="home-cta">
+    <h2>Ready to <span class="highlight">get started?</span></h2>
+    <p>Tell us about your project and get a fixed quote within 24 hours.</p>
+    <a href="{% url 'contact' %}">Get a free quote</a>
   </section>
 
 {% endblock %}

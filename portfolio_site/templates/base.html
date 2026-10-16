@@ -1,12 +1,17 @@
 {% load static %}
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#070F1D">
   <title>{% block title %}MUTITECH | AI-integrated websites for every budget{% endblock %}</title>
   <meta name="description" content="{% block meta_description %}MUTITECH builds AI-integrated websites from KES 15,000 to KES 50,000.{% endblock %}">
 
-  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/output.css' %}">
   {% block extra_head %}{% endblock %}
 </head>
 <body>
@@ -30,7 +35,6 @@
         <li><a href="{{ u_packages }}" {% if request.path == u_packages %}class="active"{% endif %}>Packages</a></li>
         <li><a href="{{ u_process }}" {% if request.path == u_process %}class="active"{% endif %}>Process</a></li>
         <li><a href="{{ u_contact }}" {% if request.path == u_contact %}class="active"{% endif %}>Contact</a></li>
-        <li><a id="nav-cta" href="{{ u_contact }}">Start a project</a></li>
       </ul>
     </nav>
   </header>
@@ -55,7 +59,7 @@
     </ul>
   </footer>
 
-  <!-- ===== WHATSAPP (behaviour added later) ===== -->
+  <!-- ===== WHATSAPP ===== -->
   <button id="whatsapp-button" type="button" aria-label="Chat on WhatsApp">WhatsApp</button>
 
   <!-- ===== CHATBOT (behaviour added later) ===== -->
@@ -74,14 +78,175 @@
     </div>
   </div>
 
-  <script>
-    /* mobile menu toggle */
+    <script>
+    const URLS = {
+      home: "{{ u_home }}",
+      about: "{{ u_about }}",
+      packages: "{{ u_packages }}",
+      process: "{{ u_process }}",
+      contact: "{{ u_contact }}"
+    };
+
+    /* ===== Mobile menu ===== */
     const menuToggle = document.getElementById('menu-toggle');
     const navLinks = document.getElementById('nav-links');
     menuToggle.addEventListener('click', () => {
       const open = navLinks.classList.toggle('open');
       menuToggle.setAttribute('aria-expanded', open);
     });
+
+    /* ===== WhatsApp ===== */
+    document.getElementById('whatsapp-button').addEventListener('click', () => {
+      const text = encodeURIComponent("Hello MUTITECH, I'd like to start a project.");
+      window.open('https://wa.me/254727696685?text=' + text, '_blank');
+    });
+
+    /* ===== Chatbot ===== */
+    (function () {
+      const openBtn = document.getElementById('chatbot-button');
+      const closeBtn = document.getElementById('chatbot-close');
+      const win = document.getElementById('chatbot-window');
+      const messages = document.getElementById('chatbot-messages');
+      const input = document.getElementById('chatbot-input');
+      const sendBtn = document.getElementById('chatbot-send');
+
+      const suggestions = [
+        'What packages do you offer?',
+        'How much do you charge?',
+        'How long does a project take?',
+        'Is maintenance included?',
+        'How do payments work?',
+        'How can I contact you?'
+      ];
+
+      const link = (url, label) => `<a href="${url}" class="chat-link">${label} →</a>`;
+
+      /* ----- The answers ----- */
+      function getReply(text) {
+        const t = text.toLowerCase();
+        const has = (...words) => words.some(w => t.includes(w));
+
+        if (/\b(hi|hello|hey)\b/.test(t)) {
+          return `Hello! 👋 We can tell you about our <b>packages</b>, <b>pricing</b>, <b>timelines</b>, <b>maintenance</b> and <b>payments</b>, or help you get a quote. What would you like to know?`;
+        }
+        if (has('maintenance', 'maintain', 'support', 'after launch', 'after go-live')) {
+          return `Maintenance after launch is a paid service on <b>Starter</b> and <b>Growth</b>. <b>Pro</b> includes 30 days of free maintenance, then it becomes paid.<br><br>${link(URLS.contact, 'Ask about maintenance')}`;
+        }
+        if (has('starter')) {
+          return `<b>Starter — KES 15K.</b> A smart landing page: 1-page responsive site, contact form with email delivery, a basic AI FAQ chatbot, SEO basics and hosting setup.<br><br>${link(URLS.contact + '?package=starter', 'Choose Starter')}`;
+        }
+        if (has('growth')) {
+          return `<b>Growth — KES 30K.</b> A business website: up to 6 custom-designed pages, an AI chatbot trained on your business, a booking or inquiry system, analytics and an M-Pesa-ready checkout option.<br><br>${link(URLS.contact + '?package=growth', 'Choose Growth')}`;
+        }
+        if (/\bpro\b/.test(t)) {
+          return `<b>Pro — KES 50K.</b> An AI-powered platform: a full web app with user accounts, AI features (content, search or assistants), an admin dashboard and 30 days of free maintenance.<br><br>${link(URLS.contact + '?package=pro', 'Choose Pro')}`;
+        }
+        if (has('price', 'cost', 'charge', 'how much', 'budget', 'cheap', 'fee')) {
+          return `Our packages:<br><br>🟢 <b>Starter</b> — KES 15K<br>🔵 <b>Growth</b> — KES 30K<br>🟣 <b>Pro</b> — KES 50K<br><br>You get a fixed quote within 24 hours.<br>${link(URLS.packages, 'Compare packages')}`;
+        }
+        if (has('package', 'plan', 'offer', 'service', 'what do you do', 'what do you build')) {
+          return `We build AI-integrated websites with chatbots, smart forms and automation, in three packages from KES 15K to KES 50K.<br><br>${link(URLS.packages, 'See all packages')}`;
+        }
+        if (has('how long', 'timeline', 'deliver', 'how fast', 'weeks', 'duration', 'time')) {
+          return `Most projects go live in <b>1–3 weeks</b>, depending on the package. We follow four steps: <b>Brief → Design → Build → Launch</b>.<br><br>${link(URLS.process, 'See the full process')}`;
+        }
+        if (has('process', 'how does it work', 'steps')) {
+          return `Four steps: <b>Brief</b> (you get a fixed quote), <b>Design</b> (you approve a layout preview), <b>Build</b> (development plus AI features) and <b>Launch</b> (go live and handover).<br><br>${link(URLS.process, 'See the full process')}`;
+        }
+        if (has('pay', 'deposit', 'mpesa', 'm-pesa', 'invoice')) {
+          return `A <b>50% deposit</b> starts the work and the remaining <b>50%</b> is paid on final delivery.<br><br>${link(URLS.contact, 'Ask about payment options')}`;
+        }
+        if (has('contact', 'reach', 'email', 'phone', 'call', 'whatsapp', 'quote', 'hire', 'start')) {
+          return `You can <b>message us on WhatsApp</b> (0727 696 685), email <b>mwitaibrahim88@gmail.com</b>, or send the form. We usually reply within 24 hours.<br><br>${link(URLS.contact, 'Get a free quote')}`;
+        }
+        if (has('who', 'about', 'team', 'company')) {
+          return `MUTITECH is a Nairobi-based team that builds AI-integrated websites for every budget.<br><br>${link(URLS.about, 'About us')}`;
+        }
+        if (has('where', 'location', 'nairobi', 'kenya')) {
+          return `We're based in <b>Nairobi, Kenya</b> and work with clients across Kenya and internationally.`;
+        }
+        return `We're not sure about that one, but we can help with <b>packages</b>, <b>pricing</b>, <b>timelines</b>, <b>maintenance</b>, <b>payments</b> and <b>how to get in touch</b>. You can also ${link(URLS.contact, 'send us a message')}`;
+      }
+
+      /* The one place that produces answers. Later, only this changes for a real AI. */
+      async function askBot(text) {
+        return getReply(text);
+      }
+
+      /* ----- Showing messages ----- */
+      function scrollDown() { messages.scrollTop = messages.scrollHeight; }
+
+      function addBot(html) {
+        const el = document.createElement('div');
+        el.className = 'bot-msg';
+        el.innerHTML = html;
+        messages.appendChild(el);
+        scrollDown();
+      }
+
+      function addUser(text) {
+        const el = document.createElement('div');
+        el.className = 'user-msg';
+        el.textContent = text;
+        messages.appendChild(el);
+        scrollDown();
+      }
+
+      function showTyping() {
+        const el = document.createElement('div');
+        el.className = 'bot-msg typing';
+        el.innerHTML = '<span></span><span></span><span></span>';
+        messages.appendChild(el);
+        scrollDown();
+        return el;
+      }
+
+      function showSuggestions() {
+        const box = document.createElement('div');
+        box.id = 'quick-replies';
+        box.innerHTML = '<p class="label">Suggested questions</p>';
+        const row = document.createElement('div');
+        suggestions.forEach(q => {
+          const b = document.createElement('button');
+          b.type = 'button';
+          b.className = 'quick-reply-btn';
+          b.textContent = q;
+          b.addEventListener('click', () => send(q));
+          row.appendChild(b);
+        });
+        box.appendChild(row);
+        messages.appendChild(box);
+      }
+
+      /* ----- Sending ----- */
+      function send(text) {
+        text = (text || '').trim();
+        if (!text) return;
+        const quick = document.getElementById('quick-replies');
+        if (quick) quick.remove();
+        addUser(text);
+        input.value = '';
+        const typing = showTyping();
+        Promise.all([askBot(text), new Promise(r => setTimeout(r, 600))])
+          .then(([reply]) => {
+            typing.remove();
+            addBot(reply);
+          });
+      }
+
+      sendBtn.addEventListener('click', () => send(input.value));
+      input.addEventListener('keydown', e => { if (e.key === 'Enter') send(input.value); });
+
+      /* ----- Open and close ----- */
+      function openChat() { win.hidden = false; input.focus(); }
+      function closeChat() { win.hidden = true; }
+
+      openBtn.addEventListener('click', () => (win.hidden ? openChat() : closeChat()));
+      closeBtn.addEventListener('click', closeChat);
+      document.addEventListener('keydown', e => { if (e.key === 'Escape') closeChat(); });
+
+      showSuggestions();
+    })();
   </script>
   {% block extra_js %}{% endblock %}
 </body>

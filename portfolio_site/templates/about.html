@@ -1,123 +1,109 @@
 {% extends 'base.html' %}
-{% load static %}
-{% block title %}About - My Portfolio{% endblock %}
+
+{% block title %}About | MUTITECH{% endblock %}
+{% block meta_description %}MUTITECH builds AI-integrated websites for businesses in Kenya and beyond, from KES 15,000 to KES 50,000.{% endblock %}
+
 {% block content %}
 
-<div class="about-page">
-  <section class="about-hero">
-    <div class="container">
+  <!-- ===== PAGE HEADER ===== -->
+  <section id="about-hero">
+    <p class="label">About</p>
+    <h1>AI-integrated apps, <span class="highlight">built for every budget.</span></h1>
+    <p id="about-intro">
+      MUTITECH is a Nairobi-based team that builds fast, modern AI-integrated websites,
+      so small businesses can get the same smart tools as big ones without the big price.
+    </p>
+  </section>
 
-      <!-- OUTER CARD WRAPPER -->
-      <div class="about-card">
-        <div class="row align-items-center gy-5">
+  <!-- ===== THE TEAM ===== -->
+  <section id="team">
+    <p class="label">Who we are</p>
+    <h2>A small team that delivers</h2>
+    <p>
+      MUTITECH is a small team that takes every project from the first brief to launch.
+      You get a fixed price, a clear timeline and direct answers to your questions.
+    </p>
+  </section>
 
-          <!-- Profile Image Column -->
-          <div class="col-lg-4 text-center">
-            <div class="about-img-wrapper">
+  <!-- ===== WHAT WE BUILD ===== -->
+  <section id="services">
+    <p class="label">What we build</p>
+    <h2>AI-integrated apps</h2>
+    <p>Every project we deliver has AI built in, so your app works harder for your business.</p>
 
-              <!-- Profile Placeholder -->
-              {% load static %}
-                <div class="about-img-wrapper">
-                    <img src="{% static 'img/hero-bg.jpg' %}"
-                         alt="Ibrahim Mutisia"
-                         class="about-profile-img">
-                </div>
+    <div id="service-list">
+      <article class="service">
+        <h3>Chatbots</h3>
+        <p>Assistants that answer customer questions around the clock.</p>
+      </article>
 
-              <!-- Badge -->
-              <div class="about-img-badge">
-                <i class="bi bi-patch-check-fill me-1"></i> Available for Work
-              </div>
+      <article class="service">
+        <h3>Smart forms</h3>
+        <p>Inquiry and booking forms that collect what you need and reach you instantly.</p>
+      </article>
 
-            </div>
-          </div>
-
-          <!-- Divider visible on large screens -->
-          <div class="col-lg-1 d-none d-lg-flex justify-content-center">
-            <div class="about-divider"></div>
-          </div>
-
-          <!-- Bio Column -->
-          <div class="col-lg-7">
-
-            <p class="about-tag">👨‍💻 About Me</p>
-            <h1 class="about-name">Ibrahim Mutisia</h1>
-            <h2 class="about-role">
-              Full-Stack Developer · Android Engineer · AI Enthusiast
-            </h2>
-
-            <div class="about-bio">
-              <p>
-                My journey into tech didn't start in a classroom — it started
-                with <strong>curiosity</strong>. I remember the first time I saw
-                a web page respond to something I typed and thought,
-                <em>"I want to build that."</em> That single moment changed
-                everything.
-              </p>
-              <p>
-                In early 2025, I enrolled at
-                <strong>Emobilis Institute of Technology</strong> where I
-                formally trained in Web Development and Android Development.
-                What began as structured learning quickly became a passion —
-                I was shipping projects outside class hours, debugging late
-                into the night, and genuinely loving every second of it.
-              </p>
-              <p>
-                Later that year I expanded into
-                <strong>Artificial Intelligence</strong> at Moringa School,
-                adding machine learning concepts to my toolkit. Today I'm
-                pursuing a <strong>Bachelor of Information Technology</strong>
-                at Mount Kenya University — constantly pushing the boundaries
-                of what I can build, from Django-powered backends to
-                production-ready Android apps integrated with Firebase and AI.
-              </p>
-              <p>
-                I don't just write code. I engineer solutions, sweat the
-                details, and build things I'm genuinely proud of.
-              </p>
-            </div>
-
-            <!-- Stats -->
-            <div class="about-stats">
-              <div class="about-stat">
-                <span class="about-stat-number">2+</span>
-                <span class="about-stat-label">Projects Built</span>
-              </div>
-              <div class="about-stat">
-                <span class="about-stat-number">5+</span>
-                <span class="about-stat-label">Technologies</span>
-              </div>
-              <div class="about-stat">
-                <span class="about-stat-number">2025</span>
-                <span class="about-stat-label">Started Coding</span>
-              </div>
-            </div>
-
-            <!-- CTA Buttons -->
-            <div class="about-btns">
-              <a href="/contact" class="skills-btn-primary">
-                <i class="bi bi-envelope-fill me-2"></i> Hire Me
-              </a>
-              <a href="{% static 'file/Ibrahim_Mutisia.pdf' %}" download
-                 class="skills-btn-outline">
-                <i class="bi bi-download me-2"></i> Download CV
-              </a>
-            </div>
-
-          </div>
-        </div>
-
-        <!-- Card Footer Strip -->
-        <div class="about-card-footer">
-          <span><i class="bi bi-geo-alt-fill me-1"></i> Nairobi, Kenya</span>
-          <span><i class="bi bi-clock-fill me-1"></i> EAT — UTC+3</span>
-          <span><i class="bi bi-briefcase-fill me-1"></i> Open to Freelance & Full-time</span>
-        </div>
-
-      </div>
-      <!-- END OUTER CARD -->
-
+      <article class="service">
+        <h3>Automation</h3>
+        <p>Repetitive tasks handled for you, so you save time and avoid mistakes.</p>
+      </article>
     </div>
   </section>
-</div>
+
+  <!-- ===== HOW WE WORK ===== -->
+  <section id="principles">
+    <p class="label">How we work</p>
+    <h2>What you can expect</h2>
+
+    <ul id="principle-list">
+      <li>
+        <h3>Fixed prices</h3>
+        <p>You see the full cost before any work begins, from KES 15,000 to KES 50,000.</p>
+      </li>
+      <li>
+        <h3>Clear timelines</h3>
+        <p>Most projects go live in 1–3 weeks, and you know where things stand at every step.</p>
+      </li>
+      <li>
+        <h3>Plain language</h3>
+        <p>No jargon. We explain what is being built and why, in words you can use to decide.</p>
+      </li>
+      <li>
+        <h3>Clear maintenance terms</h3>
+        <p>
+          The Pro package includes a short free maintenance period after launch.
+          After that, and for the Starter and Growth packages from launch day,
+          maintenance is a paid service.
+        </p>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ===== WHO IT'S FOR ===== -->
+  <section id="audience">
+    <p class="label">Who it's for</p>
+    <h2>Built for people starting small</h2>
+    <p>
+      MUTITECH works best for small businesses, startups and organisations that need a
+      professional online presence with AI features, without a big budget or a long wait.
+    </p>
+  </section>
+
+  <!-- ===== LOCATION ===== -->
+  <section id="location">
+    <p class="label">Where we are</p>
+    <h2>Nairobi, Kenya</h2>
+    <p>
+      Based in Nairobi and working with clients across Kenya and internationally,
+      by WhatsApp, email and video call.
+    </p>
+  </section>
+
+  <!-- ===== CTA ===== -->
+  <section id="about-cta">
+    <h2>Have a project in mind?</h2>
+    <p>Tell us what you need and get a fixed quote within 24 hours.</p>
+    <a href="{% url 'contact' %}">Get a free quote</a>
+    <a href="{% url 'packages' %}">See packages</a>
+  </section>
 
 {% endblock %}

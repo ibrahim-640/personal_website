@@ -1,123 +1,86 @@
-{% extends "base.html" %}
-{% block title %}Contact - My Portfolio{% endblock %}
+{% extends 'base.html' %}
+{% block title %}Contact | MUTITECH{% endblock %}
+{% block meta_description %}Tell MUTITECH about your project and get a fixed quote within 24 hours.{% endblock %}
+
 {% block content %}
 
-<div class="contact-page">
-
-  <!-- ======= PAGE HERO ======= -->
-  <section class="services-hero">
-    <div class="container text-center">
-      <p class="about-tag">📬 Get In Touch</p>
-      <h1 class="services-hero-title">Contact Me</h1>
-      <p class="services-hero-sub">
-        Have a project in mind or want to work together?
-        Fill in the form below and I will get back to you within 24 hours.
-      </p>
-    </div>
+  <!-- ===== PAGE HEADER ===== -->
+  <section id="contact-hero">
+    <p class="label">Contact</p>
+    <h1>Tell us about <span class="highlight">your project</span></h1>
+    <p id="contact-intro">
+      Share what you need and pick the package that fits. You'll get a fixed quote
+      within 24 hours.
+    </p>
   </section>
 
-  <!-- ======= CONTACT FORM ======= -->
-  <section class="container py-5">
-    <div class="request-card">
+  <!-- ===== FORM ===== -->
+  <section id="contact">
 
-      <!-- Card Header -->
-      <div class="request-card-header">
-        <i class="bi bi-envelope-fill me-2"></i>
-        Send Me a Message
+    {% if messages %}
+      <ul id="messages">
+        {% for message in messages %}
+          <li class="message {{ message.tags }}">{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+
+    <form id="contact-form" method="post" action="{% url 'contact' %}" novalidate>
+      {% csrf_token %}
+
+      <div class="field">
+        <label for="name">Name</label>
+        <input id="name" name="name" type="text" autocomplete="name" required
+               value="{{ form.name.value|default_if_none:'' }}">
+        {% for error in form.name.errors %}<span class="field-error">{{ error }}</span>{% endfor %}
       </div>
 
-      <!-- Card Body -->
-      <div class="request-card-body">
-
-        <!-- Success Alert -->
-        {% if success %}
-        <div class="contact-alert">
-          <i class="bi bi-check-circle-fill"
-             style="color: #22c55e; font-size: 1.1rem; flex-shrink:0;"></i>
-          Your message has been sent successfully! I will get back to you soon.
-        </div>
-        {% endif %}
-
-        <form method="POST">
-          {% csrf_token %}
-
-          <div class="mb-3">
-            <label class="form-label">Name</label>
-            <input type="text" class="form-control" name="name"
-                   placeholder="Ibrahim Mutisia" required>
-          </div>
-
-          <div class="mb-3">
-            <label class="form-label">Email</label>
-            <input type="email" class="form-control" name="email"
-                   placeholder="ibrahim@example.com" required>
-          </div>
-
-          <div class="mb-4">
-            <label class="form-label">Message</label>
-            <textarea class="form-control" name="message" rows="6"
-                      placeholder="Write your message here..." required></textarea>
-          </div>
-
-          <button type="submit" class="contact-submit-btn">
-            <i class="bi bi-send-fill me-2"></i>Send Message
-          </button>
-
-        </form>
+      <div class="field">
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" autocomplete="email" required
+               value="{{ form.email.value|default_if_none:'' }}">
+        {% for error in form.email.errors %}<span class="field-error">{{ error }}</span>{% endfor %}
       </div>
 
-      <!-- Card Footer -->
-      <div class="contact-card-footer">
-        <i class="bi bi-clock me-1"></i>
-        I typically respond within 24 hours.
+      <div class="field">
+        <label for="package">Package</label>
+        <select id="package" name="package">
+            {% for value, label in form.fields.package.choices %}
+              <option value="{{ value }}"{% if form.package.value == value %} selected{% endif %}>{{ label }}</option>
+            {% endfor %}
+        </select>
+        {% for error in form.package.errors %}<span class="field-error">{{ error }}</span>{% endfor %}
       </div>
 
-    </div>
+      <div class="field">
+        <label for="message">Project details</label>
+        <textarea id="message" name="message" rows="6" required>{{ form.message.value|default_if_none:'' }}</textarea>
+        {% for error in form.message.errors %}<span class="field-error">{{ error }}</span>{% endfor %}
+      </div>
+
+      <button type="submit">Send request</button>
+      <p id="response-time" class="label">We typically respond within 24 hours.</p>
+    </form>
   </section>
 
-  <!-- ======= CONTACT INFO STRIP ======= -->
-  <section class="container pb-5">
-    <div class="contact-info-strip">
-
-      <div class="contact-info-item">
-        <div class="contact-info-icon">
-          <i class="bi bi-envelope-fill"></i>
-        </div>
-        <div>
-          <p class="contact-info-label">Email</p>
-          <a href="mailto:mwitaibrahim88@gmail.com"
-             class="contact-info-value">mwitaibrahim88@gmail.com</a>
-        </div>
-      </div>
-
-      <div class="contact-info-divider"></div>
-
-      <div class="contact-info-item">
-        <div class="contact-info-icon">
-          <i class="bi bi-whatsapp"></i>
-        </div>
-        <div>
-          <p class="contact-info-label">WhatsApp</p>
-          <a href="https://wa.me/254727696685" target="_blank"
-             class="contact-info-value">+254 727696685</a>
-        </div>
-      </div>
-
-      <div class="contact-info-divider"></div>
-
-      <div class="contact-info-item">
-        <div class="contact-info-icon">
-          <i class="bi bi-geo-alt-fill"></i>
-        </div>
-        <div>
-          <p class="contact-info-label">Location</p>
-          <p class="contact-info-value">Nairobi, Kenya</p>
-        </div>
-      </div>
-
-    </div>
+  <!-- ===== OTHER WAYS TO REACH US ===== -->
+  <section id="contact-methods">
+    <p class="label">Prefer to talk?</p>
+    <h2>Other ways to reach us</h2>
+    <ul id="contact-list">
+      <li>
+        <h3>WhatsApp</h3>
+        <p><a href="https://wa.me/254727696685?text=Hello%20MUTITECH%2C%20I'd%20like%20to%20start%20a%20project." target="_blank" rel="noopener">0727 696 685</a></p>
+      </li>
+      <li>
+        <h3>Email</h3>
+        <p><a href="mailto:mwitaibrahim88@gmail.com">mwitaibrahim88@gmail.com</a></p>
+      </li>
+      <li>
+        <h3>Location</h3>
+        <p>Nairobi, Kenya</p>
+      </li>
+    </ul>
   </section>
-
-</div>
 
 {% endblock %}
