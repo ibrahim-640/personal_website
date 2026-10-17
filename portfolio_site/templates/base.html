@@ -44,19 +44,51 @@
     {% block content %}{% endblock %}
   </main>
 
-  <!-- ===== FOOTER ===== -->
+
+    <!-- ===== FOOTER ===== -->
   <footer id="site-footer">
-    <div>
-      <a href="{{ u_home }}">MUTITECH</a>
-      <p>&copy; {% now "Y" %} MUTITECH. Nairobi, Kenya.</p>
+    <div id="footer-inner">
+
+      <div id="footer-brand">
+        <a class="footer-logo" href="{{ u_home }}">MUTITECH</a>
+        <p id="footer-tagline">AI-integrated websites for every budget, from KES 15,000 to KES 50,000.</p>
+        <p id="footer-status"><span class="footer-dot"></span> <span class="label">Available for new projects</span></p>
+      </div>
+
+      <nav class="footer-col" aria-label="Footer">
+        <p class="label">Explore</p>
+        <ul>
+          <li><a href="{{ u_home }}">Home</a></li>
+          <li><a href="{{ u_about }}">About</a></li>
+          <li><a href="{{ u_packages }}">Packages</a></li>
+          <li><a href="{{ u_process }}">Process</a></li>
+          <li><a href="{{ u_contact }}">Contact</a></li>
+          <li><a href="{{ u_about }}#terms">Terms of Service</a></li>
+        </ul>
+      </nav>
+
+      <div class="footer-col">
+        <p class="label">Get in touch</p>
+        <ul>
+          <li><a href="https://wa.me/254727696685" target="_blank" rel="noopener">WhatsApp: 0727 696 685</a></li>
+          <li><a href="mailto:mwitaibrahim88@gmail.com">mwitaibrahim88@gmail.com</a></li>
+          <li><span>Nairobi, Kenya</span></li>
+        </ul>
+      </div>
+
     </div>
-    <ul id="social-links">
-      <li><a href="https://github.com/ibrahim-640" target="_blank" rel="noopener">GitHub</a></li>
-      <li><a href="https://x.com/Mwi60738Mwita" target="_blank" rel="noopener">X</a></li>
-      <li><a href="https://www.linkedin.com/in/ibrahim-mutisia-75a948357" target="_blank" rel="noopener">LinkedIn</a></li>
-      <li><a href="https://www.instagram.com/ibrahim_mutisia" target="_blank" rel="noopener">Instagram</a></li>
-      <li><a href="mailto:mwitaibrahim88@gmail.com">Email</a></li>
-    </ul>
+
+    <div id="footer-bottom">
+      <div id="footer-bottom-inner">
+        <p id="footer-copy" class="label">&copy; {% now "Y" %} MUTITECH. All rights reserved.</p>
+        <ul id="social-links">
+          <li><a href="https://github.com/ibrahim-640" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="https://x.com/Mwi60738Mwita" target="_blank" rel="noopener">X</a></li>
+          <li><a href="https://www.linkedin.com/in/ibrahim-mutisia-75a948357" target="_blank" rel="noopener">LinkedIn</a></li>
+          <li><a href="https://www.instagram.com/ibrahim_mutisia" target="_blank" rel="noopener">Instagram</a></li>
+        </ul>
+      </div>
+    </div>
   </footer>
 
   <!-- ===== WHATSAPP ===== -->

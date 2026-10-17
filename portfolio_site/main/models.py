@@ -20,6 +20,7 @@ class Inquiry(models.Model):
     email = models.EmailField()
     package = models.CharField(max_length=20, choices=PACKAGE_CHOICES, default='growth')
     message = models.TextField()
+    accepted_terms = models.BooleanField(default=False)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='new')
     created_at = models.DateTimeField(auto_now_add=True)
 

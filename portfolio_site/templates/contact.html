@@ -57,6 +57,14 @@
         <textarea id="message" name="message" rows="6" required>{{ form.message.value|default_if_none:'' }}</textarea>
         {% for error in form.message.errors %}<span class="field-error">{{ error }}</span>{% endfor %}
       </div>
+      <div class="field field-check">
+        <label for="accepted_terms">
+          <input id="accepted_terms" name="accepted_terms" type="checkbox" required
+                 {% if form.accepted_terms.value %}checked{% endif %}>
+          <span>I have read and agree to the <a href="{% url 'about' %}#terms" target="_blank" rel="noopener">Terms of Service</a>.</span>
+        </label>
+        {% for error in form.accepted_terms.errors %}<span class="field-error">{{ error }}</span>{% endfor %}
+      </div>
 
       <button type="submit">Send request</button>
       <p id="response-time" class="label">We typically respond within 24 hours.</p>
