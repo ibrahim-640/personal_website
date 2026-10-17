@@ -1,2 +1,0 @@
-release: python manage.py migrate
-web: gunicorn portfolio_site.portfolio_site.wsgi:application --bind 0.0.0.0:$PORT --log-file -
