@@ -37,6 +37,8 @@ ALLOWED_HOSTS = config(
     "ALLOWED_HOSTS",
     default="localhost,127.0.0.1"
 )
+SITE_URL = os.getenv('SITE_URL', 'http://127.0.0.1:8000').rstrip('/')
+ADMIN_PATH = os.getenv('ADMIN_PATH', 'admin/')
 
 ALLOWED_HOSTS = [host.strip() for host in ALLOWED_HOSTS.split(",")]
 
@@ -86,6 +88,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'portfolio_site.main.context_processors.site',
             ],
         },
     },
@@ -199,3 +202,8 @@ import logging
 logging.basicConfig()
 logger = logging.getLogger(__name__)
 logger.info(f"Cloudinary configured with cloud name: {os.environ.get('CLOUDINARY_CLOUD_NAME')}")
+
+if not DEBUG:
+    SESSION_COOKIE_SECURE = True      # session cookie travels only over HTTPS
+    CSRF_COOKIE_SECURE = True         # form-protection cookie only over HTTPS
+    SECURE_HSTS_SECONDS = 3600        # browsers insist on HTTPS for 1 hour; raise gradually later

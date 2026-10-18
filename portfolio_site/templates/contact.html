@@ -27,6 +27,10 @@
 
     <form id="contact-form" method="post" action="{% url 'contact' %}" novalidate>
       {% csrf_token %}
+      <div style="position:absolute;left:-9999px;" aria-hidden="true">
+        <label for="hp_ref">Leave this field empty</label>
+        <input id="hp_ref" name="hp_ref" type="text" tabindex="-1" autocomplete="off">
+      </div>
 
       <div class="field">
         <label for="name">Name</label>
@@ -54,7 +58,7 @@
 
       <div class="field">
         <label for="message">Project details</label>
-        <textarea id="message" name="message" rows="6" required>{{ form.message.value|default_if_none:'' }}</textarea>
+        <textarea id="message" name="message" rows="6" maxlength="3000" required>{{ form.message.value|default_if_none:'' }}</textarea>
         {% for error in form.message.errors %}<span class="field-error">{{ error }}</span>{% endfor %}
       </div>
       <div class="field field-check">

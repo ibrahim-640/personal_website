@@ -8,4 +8,6 @@ urlpatterns = [
     path('process/', views.process, name='process'),
     path('contact/', views.contact, name='contact'),
     path('privacy/', views.privacy, name='privacy'),
+    path('robots.txt', views.robots, name='robots'),
+    path('sitemap.xml', views.sitemap, name='sitemap'),
 ]
