@@ -7,7 +7,18 @@
   <meta name="theme-color" content="#070F1D">
   <title>{% block title %}MUTITECH | AI-integrated websites for every budget{% endblock %}</title>
   <meta name="description" content="{% block meta_description %}MUTITECH builds AI-integrated websites from KES 15,000 to KES 50,000.{% endblock %}">
+  <link rel="icon" href="{% static 'img/favicon.svg' %}" type="image/svg+xml">
+  <link rel="icon" href="{% static 'img/favicon.ico' %}" sizes="any">
+  <link rel="apple-touch-icon" href="{% static 'img/apple-touch-icon.png' %}">
+  <link rel="canonical" href="{{ SITE_URL }}{{ request.path }}">
 
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="MUTITECH">
+  <meta property="og:title" content="MUTITECH | AI-integrated websites for every budget">
+  <meta property="og:description" content="AI-integrated websites for every budget, from KES 15,000 to KES 50,000, with clear scope and delivery dates.">
+  <meta property="og:url" content="{{ SITE_URL }}{{ request.path }}">
+  <meta property="og:image" content="{{ SITE_URL }}{% static 'img/og-image.png' %}">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
