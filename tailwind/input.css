@@ -387,3 +387,41 @@
   }
   .field-check a { @apply font-semibold text-primary; }
 }
+/* ===================================================== */
+/* PRIVACY PAGE, FORM NOTE AND ERROR PAGES               */
+/* ===================================================== */
+@layer components {
+  #main > #privacy-hero { @apply pb-4 pt-16; }
+  #privacy-hero h1 { @apply my-5; }
+  #privacy-intro { @apply max-w-[620px] text-lg leading-relaxed text-muted; }
+  #privacy-updated { @apply mt-4; }
+
+  #privacy-list { @apply grid max-w-[760px] gap-4; counter-reset: policy; }
+  #privacy-list > li {
+    @apply rounded-card border border-line bg-panel p-6 backdrop-blur-[18px];
+    counter-increment: policy;
+  }
+  #privacy-list h2 { @apply text-xl font-semibold; }
+  #privacy-list h2::before { content: counter(policy) '. '; @apply text-primary; }
+  #privacy-list p { @apply mt-2 text-muted; }
+  #privacy-list ul { @apply mt-2 grid list-inside list-disc gap-1.5 text-muted; }
+  #privacy-list a { @apply font-semibold text-primary; }
+
+  .form-note { @apply text-xs text-muted; }
+  .form-note a { @apply font-semibold text-primary; }
+
+  #main > #error-page {
+    @apply flex min-h-[60vh] flex-col items-center justify-center text-center;
+  }
+  .error-code {
+    @apply bg-gradient-to-r from-primary to-glow bg-clip-text font-display text-[96px] font-bold leading-none
+           tracking-tightest text-transparent md:text-[140px];
+  }
+  #error-page h1 { @apply my-4 text-3xl md:text-5xl; }
+  .error-text { @apply max-w-[460px] text-lg text-muted; }
+  .error-actions { @apply mt-8 flex flex-col gap-3 sm:flex-row; }
+  .error-actions a {
+    @apply inline-block rounded-full border border-line-strong px-6 py-3 text-sm font-semibold text-fg transition hover:-translate-y-0.5;
+  }
+  .error-actions a:first-child { @apply border-primary bg-primary text-bg hover:text-bg; }
+}

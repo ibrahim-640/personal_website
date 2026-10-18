@@ -23,6 +23,8 @@ def packages(request):
 
 def process(request):
     return render(request, 'process.html')
+def privacy(request):
+    return render(request, 'privacy.html')
 
 
 def send_inquiry_email(inquiry):

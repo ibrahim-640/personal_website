@@ -65,6 +65,7 @@
         </label>
         {% for error in form.accepted_terms.errors %}<span class="field-error">{{ error }}</span>{% endfor %}
       </div>
+            <p class="form-note">We use your details only to reply to your request. See our <a href="{% url 'privacy' %}" target="_blank" rel="noopener">Privacy Policy</a>.</p>
 
       <button type="submit">Send request</button>
       <p id="response-time" class="label">We typically respond within 24 hours.</p>

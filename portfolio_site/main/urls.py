@@ -7,4 +7,5 @@ urlpatterns = [
     path('packages/', views.packages, name='packages'),
     path('process/', views.process, name='process'),
     path('contact/', views.contact, name='contact'),
+    path('privacy/', views.privacy, name='privacy'),
 ]
