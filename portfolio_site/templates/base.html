@@ -82,7 +82,7 @@
       <div class="footer-col">
         <p class="label">Get in touch</p>
         <ul>
-          <li><a href="https://wa.me/254727696685" target="_blank" rel="noopener">WhatsApp: 0727 696 685</a></li>
+          <li><a href="https://wa.me/{{ WHATSAPP_NUMBER }}" data-whatsapp data-message="Hello MUTITECH, I found your website and I'd like to ask about a project.">WhatsApp: 0727 696 685</a></li>
           <li><a href="mailto:mwitaibrahim88@gmail.com">mwitaibrahim88@gmail.com</a></li>
           <li><span>Nairobi, Kenya</span></li>
         </ul>
@@ -104,7 +104,8 @@
   </footer>
 
   <!-- ===== WHATSAPP ===== -->
-  <button id="whatsapp-button" type="button" aria-label="Chat on WhatsApp">WhatsApp</button>
+    <button id="whatsapp-button" type="button" aria-label="Chat on WhatsApp" data-whatsapp
+          data-message="{% block whatsapp_message %}Hello MUTITECH, I'd like to start a project.&#10;&#10;My name:&#10;What I need:&#10;Package (Starter / Growth / Pro):&#10;&#10;(Sent from the MUTITECH website){% endblock %}">WhatsApp</button>
 
   <!-- ===== CHATBOT (behaviour added later) ===== -->
   <button id="chatbot-button" type="button" aria-label="Open chat">Chat</button>
@@ -139,10 +140,23 @@
       menuToggle.setAttribute('aria-expanded', open);
     });
 
-    /* ===== WhatsApp ===== */
-    document.getElementById('whatsapp-button').addEventListener('click', () => {
-      const text = encodeURIComponent("Hello MUTITECH, I'd like to start a project.");
-      window.open('https://wa.me/254727696685?text=' + text, '_blank');
+    /* ===== WhatsApp: every element marked data-whatsapp opens a pre-filled message ===== */
+    const WHATSAPP_NUMBER = "{{ WHATSAPP_NUMBER }}";
+    const DEFAULT_WA_MESSAGE = "Hello MUTITECH, I'd like to start a project.\n\nMy name:\nWhat I need:\nPackage (Starter / Growth / Pro):\n\n(Sent from the MUTITECH website)";
+
+    function waUrl(message) {
+      return 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(message);
+    }
+
+    document.querySelectorAll('[data-whatsapp]').forEach(el => {
+      const message = el.dataset.message || DEFAULT_WA_MESSAGE;
+      if (el.tagName === 'A') {
+        el.href = waUrl(message);
+        el.target = '_blank';
+        el.rel = 'noopener';
+      } else {
+        el.addEventListener('click', () => window.open(waUrl(message), '_blank', 'noopener'));
+      }
     });
 
     /* ===== Chatbot ===== */
