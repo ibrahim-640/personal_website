@@ -8,8 +8,6 @@ from django.shortcuts import redirect, render
 from .forms import InquiryForm
 
 logger = logging.getLogger(__name__)
-
-
 def home(request):
     return render(request, 'home.html')
 

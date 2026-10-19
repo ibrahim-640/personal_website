@@ -40,7 +40,7 @@ ALLOWED_HOSTS = config(
 SITE_URL = os.getenv('SITE_URL', 'http://127.0.0.1:8000').rstrip('/')
 ADMIN_PATH = os.getenv('ADMIN_PATH', 'admin/')
 ALLOWED_HOSTS = [host.strip() for host in ALLOWED_HOSTS.split(",")]
-WHATSAPP_NUMBER = os.getenv('WHATSAPP_NUMBER') or '254727696685'
+WHATSAPP_NUMBER = os.getenv('WHATSAPP_NUMBER') or '254757894179'
 
 # CSRF Trusted Origins (important for Render)
 CSRF_TRUSTED_ORIGINS = config(
