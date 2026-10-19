@@ -425,3 +425,19 @@
   }
   .error-actions a:first-child { @apply border-primary bg-primary text-bg hover:text-bg; }
 }
+/* ===================================================== */
+/* WHATSAPP TOPIC MENU                                   */
+/* ===================================================== */
+@layer components {
+  #wa-container { @apply fixed bottom-[76px] right-5 z-[60]; }
+  #wa-container #whatsapp-button { @apply static; }
+  #wa-container #whatsapp-button[aria-expanded='true'] { @apply border-primary; }
+
+  #wa-chips { @apply absolute bottom-full right-0 mb-3 w-64 flex-col gap-2; }
+  #wa-chips:not([hidden]) { @apply flex; }
+
+  .wa-chip {
+    @apply w-full rounded-full border border-line-strong bg-surface px-4 py-2.5 text-left text-sm font-medium text-fg
+           shadow-lg backdrop-blur-[18px] transition hover:-translate-y-0.5 hover:border-primary;
+  }
+}

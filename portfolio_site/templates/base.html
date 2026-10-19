@@ -103,10 +103,18 @@
     </div>
   </footer>
 
-  <!-- ===== WHATSAPP ===== -->
-    <button id="whatsapp-button" type="button" aria-label="Chat on WhatsApp" data-whatsapp
-          data-message="{% block whatsapp_message %}Hello MUTITECH, I'd like to start a project.&#10;&#10;My name:&#10;What I need:&#10;Package (Starter / Growth / Pro):&#10;&#10;(Sent from the MUTITECH website){% endblock %}">WhatsApp</button>
-
+  <!-- ===== WHATSAPP (topic menu) ===== -->
+  <div id="wa-container">
+    <div id="wa-chips" hidden>
+      <button type="button" class="wa-chip" data-message="Hello MUTITECH, I'd like a quote for a website.&#10;&#10;My name:&#10;What I need:">💰 Get a quote</button>
+      <button type="button" class="wa-chip" data-message="Hello MUTITECH, I'd like to know more about your packages (Starter, Growth, Pro).&#10;&#10;I'm interested in:">📦 Ask about packages</button>
+      <button type="button" class="wa-chip" data-message="Hello MUTITECH, I'd like to start a project.&#10;&#10;My name:&#10;What I need:&#10;Package (Starter / Growth / Pro):">🚀 Start a project</button>
+      <button type="button" class="wa-chip" data-message="Hello MUTITECH, I have a question about maintenance after launch.">🛠 Maintenance question</button>
+      <button type="button" class="wa-chip" data-message="Hello MUTITECH, I have a general enquiry.">💬 General enquiry</button>
+    </div>
+    <button id="whatsapp-button" type="button" aria-label="WhatsApp: choose what you want to ask"
+            aria-expanded="false" aria-controls="wa-chips"><span id="wa-label">WhatsApp</span></button>
+  </div>
   <!-- ===== CHATBOT (behaviour added later) ===== -->
   <button id="chatbot-button" type="button" aria-label="Open chat">Chat</button>
   <div id="chatbot-window" hidden>
@@ -140,8 +148,8 @@
       menuToggle.setAttribute('aria-expanded', open);
     });
 
-    /* ===== WhatsApp: every element marked data-whatsapp opens a pre-filled message ===== */
-    const WHATSAPP_NUMBER = "{{ WHATSAPP_NUMBER }}";
+        /* ===== WhatsApp: every element marked data-whatsapp opens a pre-filled message ===== */
+    const WHATSAPP_NUMBER = "{{ WHATSAPP_NUMBER|default:'254727696685' }}";
     const DEFAULT_WA_MESSAGE = "Hello MUTITECH, I'd like to start a project.\n\nMy name:\nWhat I need:\nPackage (Starter / Growth / Pro):\n\n(Sent from the MUTITECH website)";
 
     function waUrl(message) {
@@ -158,6 +166,41 @@
         el.addEventListener('click', () => window.open(waUrl(message), '_blank', 'noopener'));
       }
     });
+
+    /* ===== WhatsApp topic menu ===== */
+    (function () {
+      const btn = document.getElementById('whatsapp-button');
+      const menu = document.getElementById('wa-chips');
+      const label = document.getElementById('wa-label');
+      const box = document.getElementById('wa-container');
+      const chatWin = document.getElementById('chatbot-window');
+      const chatBtn = document.getElementById('chatbot-button');
+      if (!btn || !menu) return;
+
+      function setOpen(open) {
+        menu.hidden = !open;
+        btn.setAttribute('aria-expanded', open);
+        label.textContent = open ? 'Close' : 'WhatsApp';
+        if (open && chatWin) chatWin.hidden = true;
+      }
+
+      btn.addEventListener('click', e => {
+        e.stopPropagation();
+        setOpen(menu.hidden);
+      });
+
+      menu.querySelectorAll('.wa-chip').forEach(chip => {
+        chip.addEventListener('click', e => {
+          e.stopPropagation();
+          window.open(waUrl(chip.dataset.message), '_blank', 'noopener');
+          setOpen(false);
+        });
+      });
+
+      document.addEventListener('click', e => { if (!box.contains(e.target)) setOpen(false); });
+      document.addEventListener('keydown', e => { if (e.key === 'Escape') setOpen(false); });
+      if (chatBtn) chatBtn.addEventListener('click', () => setOpen(false));
+    })();
 
     /* ===== Chatbot ===== */
     (function () {
