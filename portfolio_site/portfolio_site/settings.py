@@ -170,26 +170,6 @@ CONTACT_EMAIL = "mwitaibrahim88@gmail.com"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-# Cloudinary configuration
-import cloudinary
-import cloudinary.uploader
-import cloudinary.api
-import os
-
-# Configure Cloudinary directly (this is what the model will use)
-cloudinary.config(
-    cloud_name=os.environ.get('CLOUDINARY_CLOUD_NAME'),
-    api_key=os.environ.get('CLOUDINARY_API_KEY'),
-    api_secret=os.environ.get('CLOUDINARY_API_SECRET'),
-    secure=True
-)
-
-# Django storage configuration (kept for compatibility)
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
-    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
-    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
-}
 STORAGES = {
     "default": {
         "BACKEND": "django.core.files.storage.FileSystemStorage",
@@ -198,11 +178,6 @@ STORAGES = {
         "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
     },
 }
-import logging
-logging.basicConfig()
-logger = logging.getLogger(__name__)
-logger.info(f"Cloudinary configured with cloud name: {os.environ.get('CLOUDINARY_CLOUD_NAME')}")
-
 if not DEBUG:
     SESSION_COOKIE_SECURE = True      # session cookie travels only over HTTPS
     CSRF_COOKIE_SECURE = True         # form-protection cookie only over HTTPS
